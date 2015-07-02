@@ -1,6 +1,3 @@
----
----
-
 class d3.chart.Colorbar extends d3.chart.BaseChart
 
     constructor: ->
