@@ -1,0 +1,109 @@
+/ Header
+%header#top.header
+  .text-vertical-center
+    %h1 Start Bootstrap
+    %h3 Free Bootstrap Themes & Templates
+    %br/
+    %a.btn.btn-dark.btn-lg{:href => "#about"} Find Out More
+/ About
+%section#about.about
+  .container
+    .row
+      .col-lg-12.text-center
+        %h2 Stylish Portfolio is the perfect theme for your next project!
+        %p.lead
+          This theme features some wonderful photography courtesy of
+          = succeed "." do
+            %a{:href => "http://join.deathtothestockphoto.com/", :target => "_blank"} Death to the Stock Photo
+    / /.row
+  / /.container
+/ Services
+/ The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/
+%section#services.services.bg-primary
+  .container
+    .row.text-center
+      .col-lg-10.col-lg-offset-1
+        %h2 Our Services
+        %hr.small/
+        .row
+          .col-md-3.col-sm-6
+            .service-item
+              %span.fa-stack.fa-4x
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-cloud.fa-stack-1x.text-primary
+              %h4
+                %strong Service Name
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              %a.btn.btn-light{:href => "#"} Learn More
+          .col-md-3.col-sm-6
+            .service-item
+              %span.fa-stack.fa-4x
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-compass.fa-stack-1x.text-primary
+              %h4
+                %strong Service Name
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              %a.btn.btn-light{:href => "#"} Learn More
+          .col-md-3.col-sm-6
+            .service-item
+              %span.fa-stack.fa-4x
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-flask.fa-stack-1x.text-primary
+              %h4
+                %strong Service Name
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              %a.btn.btn-light{:href => "#"} Learn More
+          .col-md-3.col-sm-6
+            .service-item
+              %span.fa-stack.fa-4x
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-shield.fa-stack-1x.text-primary
+              %h4
+                %strong Service Name
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              %a.btn.btn-light{:href => "#"} Learn More
+        / /.row (nested)
+      / /.col-lg-10
+    / /.row
+  / /.container
+/ Callout
+%aside.callout
+  .text-vertical-center
+    %h1 Vertically Centered Text
+/ Portfolio
+%section#portfolio.portfolio
+  .container
+    .row
+      .col-lg-10.col-lg-offset-1.text-center
+        %h2 Our Work
+        %hr.small/
+        .row
+          .col-md-6
+            .portfolio-item
+              %a{:href => "#"}
+                %img.img-portfolio.img-responsive{:src => "img/portfolio-1.jpg"}/
+          .col-md-6
+            .portfolio-item
+              %a{:href => "#"}
+                %img.img-portfolio.img-responsive{:src => "img/portfolio-2.jpg"}/
+          .col-md-6
+            .portfolio-item
+              %a{:href => "#"}
+                %img.img-portfolio.img-responsive{:src => "img/portfolio-3.jpg"}/
+          .col-md-6
+            .portfolio-item
+              %a{:href => "#"}
+                %img.img-portfolio.img-responsive{:src => "img/portfolio-4.jpg"}/
+        / /.row (nested)
+        %a.btn.btn-dark{:href => "#"} View More Items
+      / /.col-lg-10
+    / /.row
+  / /.container
+/ Call to Action
+%aside.call-to-action.bg-primary
+  .container
+    .row
+      .col-lg-12.text-center
+        %h3 The buttons below are impossible to resist.
+        %a.btn.btn-lg.btn-light{:href => "#"} Click Me!
+        %a.btn.btn-lg.btn-dark{:href => "#"} Look at Me!
