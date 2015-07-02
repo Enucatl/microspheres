@@ -7,3 +7,4 @@
 //= require vendor/d3.scatter/scatter
 //= require vendor/d3.line/line
 //= require _images
+//= require _histograms

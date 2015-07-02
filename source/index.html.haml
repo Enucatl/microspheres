@@ -1,77 +1,67 @@
 / Header
 %header#top.header
   .text-vertical-center
-    %h1 Start Bootstrap
-    %h3 Free Bootstrap Themes & Templates
+    %h1 Silica microspheres
+    %h3 0.16 to 7.75 &micro;m
     %br/
-    %a.btn.btn-dark.btn-lg{:href => "#about"} Find Out More
+    %a.btn.btn-dark.btn-lg{:href => "#experiment"} the experiment
+
 / About
-%section#about.about
+%section#analysis.about
   .container
     .row
       .col-lg-12.text-center
-        %h2 Stylish Portfolio is the perfect theme for your next project!
+        %h2 overview
         %p.lead
-          This theme features some wonderful photography courtesy of
-          = succeed "." do
-            %a{:href => "http://join.deathtothestockphoto.com/", :target => "_blank"} Death to the Stock Photo
-    / /.row
-  / /.container
-/ Services
+          The microspheres are analysed with a 100 keV design energy interferometer
+
 / The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/
 %section#services.services.bg-primary
   .container
     .row.text-center
       .col-lg-10.col-lg-offset-1
-        %h2 Our Services
+        %h2 the experiment
         %hr.small/
         .row
           .col-md-3.col-sm-6
             .service-item
               %span.fa-stack.fa-4x
                 %i.fa.fa-circle.fa-stack-2x
-                %i.fa.fa-cloud.fa-stack-1x.text-primary
-              %h4
-                %strong Service Name
-              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              %a.btn.btn-light{:href => "#"} Learn More
-          .col-md-3.col-sm-6
-            .service-item
-              %span.fa-stack.fa-4x
-                %i.fa.fa-circle.fa-stack-2x
-                %i.fa.fa-compass.fa-stack-1x.text-primary
-              %h4
-                %strong Service Name
-              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              %a.btn.btn-light{:href => "#"} Learn More
-          .col-md-3.col-sm-6
-            .service-item
-              %span.fa-stack.fa-4x
-                %i.fa.fa-circle.fa-stack-2x
                 %i.fa.fa-flask.fa-stack-1x.text-primary
               %h4
-                %strong Service Name
-              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              %a.btn.btn-light{:href => "#"} Learn More
+                %strong setup
+              %p 100 keV interferometer
+              %a.btn.btn-light{:href => "#setup"} Learn More
           .col-md-3.col-sm-6
             .service-item
               %span.fa-stack.fa-4x
                 %i.fa.fa-circle.fa-stack-2x
-                %i.fa.fa-shield.fa-stack-1x.text-primary
+                %i.fa.fa-camera.fa-stack-1x.text-primary
               %h4
-                %strong Service Name
-              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              %a.btn.btn-light{:href => "#"} Learn More
-        / /.row (nested)
-      / /.col-lg-10
-    / /.row
-  / /.container
-/ Callout
-%aside.callout
-  .text-vertical-center
-    %h1 Vertically Centered Text
+                %strong images
+              %p the raw images recorded with the mythen
+              %a.btn.btn-light{:href => "#dataset-images"} Learn More
+          .col-md-3.col-sm-6
+            .service-item
+              %span.fa-stack.fa-4x
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-bar-chart.fa-stack-1x.text-primary
+              %h4
+                %strong histograms
+              %p stats on each dataset
+              %a.btn.btn-light{:href => "#dataset-plots"} Learn More
+          .col-md-3.col-sm-6
+            .service-item
+              %span.fa-stack.fa-4x
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-book.fa-stack-1x.text-primary
+              %h4
+                %strong theory
+              %p a theoretical description of polychromatic scattering
+              %a.btn.btn-light{:href => "#theory"} Learn More
+
 / Portfolio
-%section#portfolio.portfolio
+%section#dataset-images.portfolio
   .container
     .row
       .col-lg-10.col-lg-offset-1.text-center
@@ -87,11 +77,7 @@
           .col-md-4
             %h3 ratio of the logarithms
             .portfolio-item#ratio-image
-        / /.row (nested)
-        %a.btn.btn-dark{:href => "#"} View More Items
-      / /.col-lg-10
-    / /.row
-  / /.container
+
 / Call to Action
 %aside.call-to-action.bg-primary
   .container
@@ -100,3 +86,23 @@
         %h3 The buttons below are impossible to resist.
         %a.btn.btn-lg.btn-light{:href => "#"} Click Me!
         %a.btn.btn-lg.btn-dark{:href => "#"} Look at Me!
+%section#dataset-plots.portfolio
+  .container
+    .row
+      .col-lg-10.col-lg-offset-1.text-center
+        %h2 single dataset plots
+        %hr.small/
+        .row
+          .col-md-6
+            %h3 absorption
+            .portfolio-item#absorption-histogram
+          .col-md-6
+            %h3 dark field
+            .portfolio-item#darkfield-histogram
+        .row
+          .col-md-6
+            %h3 ratio of the logarithms
+            .portfolio-item#ratio-histogram
+          .col-md-6
+            %h3 visibility
+            .portfolio-item#visibility-histogram
