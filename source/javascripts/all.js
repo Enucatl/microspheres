@@ -8,3 +8,5 @@
 //= require vendor/d3.line/line
 //= require _images
 //= require _histograms
+//= require _select_dataset
+//= require _summary
