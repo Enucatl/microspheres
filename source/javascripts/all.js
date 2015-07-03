@@ -6,6 +6,7 @@
 //= require vendor/d3.barchart/bar
 //= require vendor/d3.scatter/scatter
 //= require vendor/d3.line/line
+//= require vendor/d3.errorbar/errorbar
 //= require _images
 //= require _histograms
 //= require _select_dataset

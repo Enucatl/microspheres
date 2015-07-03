@@ -33,6 +33,13 @@ $ ->
         .x_title "diameter (μm)"
         .y_title "ratio of the logarithms"
 
+    errorbars = new d3.chart.Errorbar()
+        .x_scale scatter.x_scale()
+        .y_scale scatter.y_scale()
+        .x_value scatter.x_value()
+        .y_value scatter.y_value()
+        .y_error_value (d) -> d.sd_R
+
     d3.select placeholder
         .datum data
         .call scatter.draw
@@ -40,5 +47,24 @@ $ ->
     d3.select placeholder
         .select "svg"
         .select "g"
+        .datum data
+        .call errorbars.draw
+
+    d3.select placeholder
+        .select "svg"
+        .select "g"
         .datum 1
         .call axes.draw
+
+    # redraw circles on top of errorbars
+    # http://stackoverflow.com/a/26277417
+    d3.select placeholder
+        .select "svg"
+        .select "g"
+        .select ".circles"
+        .attr "id", "circles"
+    d3.select placeholder
+        .select "svg"
+        .select "g"
+        .append "use"
+        .attr "xlink:href", "#circles"
