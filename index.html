@@ -10,6 +10,7 @@
 <!-- Bootstrap Core CSS -->
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 <link href="stylesheets/all.css" rel="stylesheet" type="text/css" />
 <!-- Custom Fonts -->
@@ -56,6 +57,9 @@
 <div class='text-vertical-center'>
 <h1>Silica microspheres</h1>
 <h3>0.16 to 7.75 &micro;m</h3>
+<div class='row'>
+<div class='col-md-9 col-md-offset-3' data-src='[{"file":"data/S00044_S00063.csv","thickness":0.166,"mean_A":0.3447,"sd_A":0.0101,"mean_B":0.0869,"sd_B":0.0128,"mean_R":2.3025,"sd_R":0.116},{"file":"data/S00064_S00083.csv","thickness":0.166,"mean_A":0.6638,"sd_A":0.0146,"mean_B":0.3477,"sd_B":0.0366,"mean_R":2.5918,"sd_R":0.2413}]' id='summary-plot'></div>
+</div>
 <br>
 <a class='btn btn-dark btn-lg' href='#experiment'>the experiment</a>
 </div>
@@ -146,6 +150,23 @@ The microspheres are analysed with a 100 keV design energy interferometer
 <h2>single dataset raw images</h2>
 <hr class='small'>
 <div class='row'>
+<div class='col-md-3 text-right'>
+select dataset:
+</div>
+<div class='col-md-3'>
+<select id='select-dataset'>
+<option value='data/S00044_S00063.csv'>
+0.166
+&micro;m
+</option>
+<option value='data/S00064_S00083.csv'>
+0.166
+&micro;m
+</option>
+</select>
+</div>
+</div>
+<div class='row'>
 <div class='col-md-4'>
 <h3>absorption</h3>
 <div class='portfolio-item' id='absorption-image'></div>
@@ -168,7 +189,9 @@ The microspheres are analysed with a 100 keV design energy interferometer
 <div class='container'>
 <div class='row'>
 <div class='col-lg-12 text-center'>
-<h3>The buttons below are impossible to resist.</h3>
+<h3>
+[{"file"=>"data/S00044_S00063.csv", "thickness"=>0.166, "mean_A"=>0.3447, "sd_A"=>0.0101, "mean_B"=>0.0869, "sd_B"=>0.0128, "mean_R"=>2.3025, "sd_R"=>0.116}, {"file"=>"data/S00064_S00083.csv", "thickness"=>0.166, "mean_A"=>0.6638, "sd_A"=>0.0146, "mean_B"=>0.3477, "sd_B"=>0.0366, "mean_R"=>2.5918, "sd_R"=>0.2413}]
+</h3>
 <a class='btn btn-lg btn-light' href='#'>Click Me!</a>
 <a class='btn btn-lg btn-dark' href='#'>Look at Me!</a>
 </div>
@@ -181,6 +204,23 @@ The microspheres are analysed with a 100 keV design energy interferometer
 <div class='col-lg-10 col-lg-offset-1 text-center'>
 <h2>single dataset plots</h2>
 <hr class='small'>
+<div class='row'>
+<div class='col-md-3 text-right'>
+select dataset:
+</div>
+<div class='col-md-3'>
+<select id='select-dataset-plots'>
+<option value='data/S00044_S00063.csv'>
+0.166
+&micro;m
+</option>
+<option value='data/S00064_S00083.csv'>
+0.166
+&micro;m
+</option>
+</select>
+</div>
+</div>
 <div class='row'>
 <div class='col-md-6'>
 <h3>absorption</h3>
@@ -237,6 +277,7 @@ Matteo Abis
 <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js" type="text/javascript"></script>
 <script src="javascripts/all.js" type="text/javascript"></script>
 </body>
 </html>
