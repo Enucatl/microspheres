@@ -8,7 +8,7 @@ $ ->
     scatter = new d3.chart.Scatter()
         .width width
         .height height
-        .x_value (d) -> d.thickness
+        .x_value (d) -> d.particle_size
         .y_value (d) -> d.mean_R
         .color_value (d) -> d.file
         .margin {

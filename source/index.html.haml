@@ -31,36 +31,36 @@
                 %i.fa.fa-circle.fa-stack-2x
                 %i.fa.fa-flask.fa-stack-1x.text-primary
               %h4
-                %strong setup
+                %a{href: "#setup"}
+                  %strong setup
               %p 100 keV interferometer
-              %a.btn.btn-light{:href => "#setup"} Learn More
           .col-md-3.col-sm-6
             .service-item
               %span.fa-stack.fa-4x
                 %i.fa.fa-circle.fa-stack-2x
                 %i.fa.fa-camera.fa-stack-1x.text-primary
               %h4
-                %strong images
+                %a{href: "#dataset-images"}
+                  %strong images
               %p the raw images recorded with the mythen
-              %a.btn.btn-light{:href => "#dataset-images"} Learn More
           .col-md-3.col-sm-6
             .service-item
               %span.fa-stack.fa-4x
                 %i.fa.fa-circle.fa-stack-2x
                 %i.fa.fa-bar-chart.fa-stack-1x.text-primary
               %h4
-                %strong histograms
+                %a{href: "#dataset-plots"}
+                  %strong histograms
               %p stats on each dataset
-              %a.btn.btn-light{:href => "#dataset-plots"} Learn More
           .col-md-3.col-sm-6
             .service-item
               %span.fa-stack.fa-4x
                 %i.fa.fa-circle.fa-stack-2x
                 %i.fa.fa-book.fa-stack-1x.text-primary
               %h4
-                %strong theory
+                %a{href: "#theory"}
+                  %strong theory
               %p a theoretical description of polychromatic scattering
-              %a.btn.btn-light{:href => "#theory"} Learn More
 
 / Portfolio
 %section#dataset-images.portfolio
@@ -72,12 +72,14 @@
         .row
           .col-md-3.text-right
             select dataset:
-          .col-md-3
+          .col-md-6.text-center
             %select#select-dataset
               - data.summary.each do |s|
                 %option{value: s.file}
-                  =s.thickness
-                  &micro;m
+                  =s.particle_size
+                  &micro;m particle size,
+                  =s.sample_thickness
+                  mm sample thickness
         .row
           .col-md-4
             %h3 absorption
@@ -94,7 +96,8 @@
   .container
     .row
       .col-md-3
-        %h3 gratings
+        %h3
+          %strong gratings
         %p
           G<sub>0</sub> fabricated by the
           %a{href: "https://www.knmf.kit.edu/"} KNMF
@@ -108,20 +111,23 @@
           Curvature radius: G<sub>0</sub> 23 cm, G<sub>1</sub> 38.8 cm,
           G<sub>2</sub> 54.6 cm.
       .col-md-3
-        %h3 source
+        %h3
+          %strong source
         %p
           %a{href: "www.comet-xray.com/"} COMET MXR-160HP/11
         %p 160 kVp
         %p 10 mA
         %p 1 mm source size
       .col-md-3
-        %h3 detector
+        %h3
+          %strong detector
         %p
           %a{href: "http://www.psi.ch/detectors/mythen"} MYTHEN
           silicon strip detector. Custom sensor with 2 cm thickness and
           fan geometry of the strips.
       .col-md-3
-        %h3 samples
+        %h3
+          %strong samples
         %p
           %a{href: "http://www.cospheric.com/SiO2MS_monodisperse_silica_spheres_beads_nm_microns.htm"} Cospheric LLC
           monodisperse silica microspheres.
@@ -135,12 +141,14 @@
         .row
           .col-md-3.text-right
             select dataset:
-          .col-md-3
-            %select#select-dataset-plots
+          .col-md-6.text-center
+            %select#select-dataset
               - data.summary.each do |s|
                 %option{value: s.file}
-                  =s.thickness
-                  &micro;m
+                  =s.particle_size
+                  &micro;m particle size,
+                  =s.sample_thickness
+                  mm sample thickness
         .row
           .col-md-6
             %h3 absorption

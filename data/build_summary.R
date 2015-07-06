@@ -7,12 +7,19 @@ files = c(
     "../source/data/S00044_S00063.csv",
     "../source/data/S00064_S00083.csv"
     )
-thicknesses = c(
+sizes = c(
     0.166,
     0.166
     ) #um
+thicknesses = c(
+    45,
+    12
+    ) #mm
 
-datasets = data.table(file=files, thickness=thicknesses)
+datasets = data.table(
+    file=files,
+    particle_size=sizes,
+    sample_thickness=thicknesses)
 setkey(datasets, file)
 
 summary = datasets[, `:=`(
