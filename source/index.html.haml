@@ -142,7 +142,7 @@
           .col-md-3.text-right
             select dataset:
           .col-md-6.text-center
-            %select#select-dataset
+            %select#select-dataset-plots
               - data.summary.each do |s|
                 %option{value: s.file}
                   =s.particle_size
