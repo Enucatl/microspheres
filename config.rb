@@ -85,19 +85,5 @@ activate :deploy do |deploy|
   # deploy.commit_message = 'custom-message'      # commit message (can be empty), default: Automated commit at `timestamp` by middleman-deploy `version`
 end
 
-ignore "javascripts/vendor/d3.scatter/LICENSE"
-ignore "javascripts/vendor/d3.scatter/README.md"
-ignore "javascripts/vendor/d3.line/LICENSE"
-ignore "javascripts/vendor/d3.line/README.md"
-ignore "javascripts/vendor/d3.axes/LICENSE"
-ignore "javascripts/vendor/d3.axes/README.md"
-ignore "javascripts/vendor/d3.barchart/LICENSE"
-ignore "javascripts/vendor/d3.barchart/README.md"
-ignore "javascripts/vendor/d3.colorbar/LICENSE"
-ignore "javascripts/vendor/d3.colorbar/README.md"
-ignore "javascripts/vendor/d3.image/LICENSE"
-ignore "javascripts/vendor/d3.image/README.md"
-ignore "javascripts/vendor/d3.errorbar/LICENSE"
-ignore "javascripts/vendor/d3.errorbar/README.md"
-ignore "javascripts/vendor/d3.base.chart/LICENSE"
-ignore "javascripts/vendor/d3.base.chart/README.md"
+ignore "**/LICENSE"
+ignore "**/README.md"
