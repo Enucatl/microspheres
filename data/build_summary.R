@@ -5,15 +5,39 @@ library(jsonlite)
 
 files = c(
     "../source/data/S00044_S00063.csv",
-    "../source/data/S00064_S00083.csv"
+    "../source/data/S00064_S00083.csv",
+    "../source/data/S00002_S00021.csv",
+    "../source/data/S00022_S00041.csv",
+    "../source/data/S00043_S00062.csv",
+    "../source/data/S00063_S00082.csv",
+    "../source/data/S00084_S00103.csv",
+    "../source/data/S00104_S00123.csv",
+    "../source/data/S00127_S00146.csv",
+    "../source/data/S00147_S00166.csv"
     )
 sizes = c(
     0.166,
-    0.166
+    0.166,
+    0.261,
+    0.261,
+    0.507,
+    0.507,
+    0.690,
+    0.690,
+    0.890,
+    0.890
     ) #um
 thicknesses = c(
     45,
-    12
+    12,
+    12,
+    45,
+    12,
+    45,
+    12,
+    45,
+    12,
+    45
     ) #mm
 
 datasets = data.table(

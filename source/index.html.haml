@@ -85,8 +85,9 @@
           .col-md-3.text-right
             select dataset:
           .col-md-6.text-center
+            - datasets = data.summary.sort {|a, b| a.particle_size <=> b.particle_size}
             %select#select-dataset
-              - data.summary.each do |s|
+              - datasets.each do |s|
                 %option{value: s.file}
                   =s.particle_size
                   &micro;m particle size,
@@ -159,7 +160,7 @@
             select dataset:
           .col-md-6.text-center
             %select#select-dataset-plots
-              - data.summary.each do |s|
+              - datasets.each do |s|
                 %option{value: s.file}
                   =s.particle_size
                   &micro;m particle size,
