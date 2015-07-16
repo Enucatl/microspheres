@@ -1,8 +1,9 @@
-class d3.chart.LineLegend extends d3.chart.BaseChart
+class d3.chart.CircleLegend extends d3.chart.BaseChart
 
     constructor: ->
         @accessors = {} unless @accessors?
         @accessors.color_scale = d3.scale.category20()
+        @accessors.radius = 3
         super
 
     _draw: (element, data, i) ->
@@ -10,6 +11,7 @@ class d3.chart.LineLegend extends d3.chart.BaseChart
         width = $(element)[0].getBBox().width
         # convenience accessors
         color_scale = @color_scale()
+        radius = @radius()
 
         font_size = $(element).css('font-size')
         legend_element_height = Math.floor(parseInt(font_size.replace('px','')) * 1.5)
@@ -34,21 +36,20 @@ class d3.chart.LineLegend extends d3.chart.BaseChart
             .classed "legend", true
 
         legends.each (d) ->
-            lines = d3.select this
-                .selectAll "line"
+            circles = d3.select this
+                .selectAll "circle"
                 .data [d]
 
-            lines
+            circles
                 .enter()
-                .append "line"
+                .append "circle"
                 .classed "legend", true
-                .attr "x1", width - legend_line_width
-                .attr "x2", width
-                .attr "y1", 0.5 * legend_element_height
-                .attr "y2", 0.5 * legend_element_height
+                .attr "cx", width - legend_circle_width
+                .attr "cy", 0.5 * legend_element_height
+                .attr "radius", radius
                 .attr "stroke", color_scale
 
-            lines.exit().remove()
+            circles.exit().remove()
 
             texts = d3.select this
                 .selectAll "text"
@@ -57,7 +58,7 @@ class d3.chart.LineLegend extends d3.chart.BaseChart
             texts
                 .enter()
                 .append "text"
-                .attr "x", width - 1.2 * legend_line_width
+                .attr "x", width - 1.2 * legend_circle_width
                 .attr "y", 0.5 * legend_element_height
                 .attr "dy", 0.25 * legend_element_height
                 .style "text-anchor", "end"
