@@ -19,7 +19,9 @@ files = c(
     "../source/data/S00233_S00252.csv",
     "../source/data/S00253_S00272.csv",
     "../source/data/S00275_S00294.csv",
-    "../source/data/S00295_S00314.csv"
+    "../source/data/S00295_S00314.csv",
+    "../source/data/S00317_S00336.csv",
+    "../source/data/S00337_S00356.csv"
     )
 sizes = c(
     0.166,
@@ -37,11 +39,15 @@ sizes = c(
     1.54,
     1.54,
     1.70,
-    1.70
+    1.70,
+    1.86,
+    1.86
     ) #um
 thicknesses = c(
     45,
     12,
+    12,
+    45,
     12,
     45,
     12,
