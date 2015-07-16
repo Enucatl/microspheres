@@ -50,11 +50,16 @@ $ ->
         .datum data
         .call errorbars.draw
 
+    legend = new d3.chart.CircleLegend()
+        .color_scale scatter.color_scale()
+        .width width
+
     d3.select placeholder
         .select "svg"
         .select "g"
         .datum 1
         .call axes.draw
+        .call legend.draw
 
     # redraw circles on top of errorbars
     # http://stackoverflow.com/a/26277417
