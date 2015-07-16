@@ -53,6 +53,7 @@ $ ->
     legend = new d3.chart.CircleLegend()
         .color_scale scatter.color_scale()
         .width width
+        .text_value (d) -> "sample thickness #{d} mm"
 
     d3.select placeholder
         .select "svg"

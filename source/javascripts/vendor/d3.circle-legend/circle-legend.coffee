@@ -4,6 +4,7 @@ class d3.chart.CircleLegend extends d3.chart.BaseChart
         @accessors = {} unless @accessors?
         @accessors.color_scale = d3.scale.category20()
         @accessors.radius = 3
+        @accessors.text_value = (d) -> d
         super
 
     _draw: (element, data, i) ->
@@ -11,11 +12,12 @@ class d3.chart.CircleLegend extends d3.chart.BaseChart
         width = $(element)[0].getBBox().width
         # convenience accessors
         color_scale = @color_scale()
+        text_value = @text_value()
         radius = @radius()
 
         font_size = $(element).css('font-size')
         legend_element_height = Math.floor(parseInt(font_size.replace('px','')) * 1.5)
-        legend_line_width = 0.05 * width
+        legend_circle_width = 0.05 * width
 
         legend_group = d3.select element
             .selectAll ".legends"
@@ -46,8 +48,8 @@ class d3.chart.CircleLegend extends d3.chart.BaseChart
                 .classed "legend", true
                 .attr "cx", width - legend_circle_width
                 .attr "cy", 0.5 * legend_element_height
-                .attr "radius", radius
-                .attr "stroke", color_scale
+                .attr "r", radius
+                .attr "fill", color_scale
 
             circles.exit().remove()
 
@@ -62,7 +64,7 @@ class d3.chart.CircleLegend extends d3.chart.BaseChart
                 .attr "y", 0.5 * legend_element_height
                 .attr "dy", 0.25 * legend_element_height
                 .style "text-anchor", "end"
-                .text (d) -> d
+                .text text_value
 
             texts.exit().remove()
 
