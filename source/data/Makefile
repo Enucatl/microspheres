@@ -48,4 +48,4 @@ S00275_S00294.csv: S00275_S00294.hdf5 hdf2csv.py
 	python hdf2csv.py $< --crop 100 1000
 
 S00295_S00314.csv: S00295_S00314.hdf5 hdf2csv.py
-	python hdf2csv.py $< --crop 100 1000
+	python hdf2csv.py $< --crop 470 635
