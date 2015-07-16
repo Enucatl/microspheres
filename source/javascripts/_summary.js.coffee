@@ -10,7 +10,7 @@ $ ->
         .height height
         .x_value (d) -> d.particle_size
         .y_value (d) -> d.mean_R
-        .color_value (d) -> d.file
+        .color_value (d) -> d.sample_thickness
         .margin {
             bottom: 50
             left: 50
