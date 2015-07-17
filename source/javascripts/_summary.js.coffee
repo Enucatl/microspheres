@@ -19,7 +19,7 @@ $ ->
         }
 
     scatter.x_scale()
-        .domain [0, 10]
+        .domain [0, 8]
     scatter.y_scale()
         .domain [
             0.8 * d3.min data, scatter.y_value()
