@@ -17,7 +17,11 @@ spectrum = function(thickness) {
 }
 
 mu = function(A, n_squared, D, e) {
-    d = 1.24e-3 * 20e4 / 2.8 / e
+    # distance = 20cm = 20e4 um
+    # hc = 1.24e-3 um keV
+    # period = 2.8 um
+    autocorrelation_factor = 1.24e-3 * 20e4 / 2.8
+    d =  autocorrelation_factor / e
     x = D / d
     f = A * n_squared * e
     if (x <= 1) {
