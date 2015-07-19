@@ -53,7 +53,6 @@ perform_fit = function(thickness) {
 }
 
 prediction = rbindlist(list(perform_fit(12), perform_fit(45)))
-print(prediction)
 
 plot = ggplot(summary) + 
     geom_point(aes(x=particle_size, y=mean_R, group=sample_thickness,
@@ -69,5 +68,7 @@ plot = ggplot(summary) +
          colour="sample thickness (mm)")
 X11(width=14, height=10)
 print(plot)
+print(toJSON(prediction))
+
 warnings()
 invisible(readLines(con="stdin", 1))
