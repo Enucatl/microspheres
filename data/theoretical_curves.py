@@ -23,7 +23,7 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order, thickness):
             _, _, si_atlen = xdb.xray_delta_beta('Si', 2.33, energy * 1e3)
             detector_efficiency = 1 - np.exp(-2 / si_atlen)
             absorbed_in_sample = np.exp(-thickness / sio2_atlen)
-            total_weight = photons * visibility * detector_efficiency * absorbed_in_sample
+            total_weight = photons * detector_efficiency * absorbed_in_sample
             n_squared = delta ** 2 + beta ** 2
             output.writerow([energy, photons, n_squared, visibility,
                              detector_efficiency, absorbed_in_sample,

@@ -6,6 +6,7 @@ library(ggplot2)
 
 summary = data.table(fromJSON("summary.json"))
 setkey(summary, "sample_thickness")
+
 spectrum = function(thickness) {
     if (thickness == 12) {
         return(fread("1.2.csv"))
@@ -32,28 +33,28 @@ mu = function(A, n_squared, D, e) {
 }
 
 mu_total = function(spectrum, A, D) {
-    total = spectrum[, mu_e := mu(A, n_squared, D, energy), by=energy]
-    return(total[, mu_e %*% total_weight])
+    return(sapply(D, function(D_) {
+        total = spectrum[, mu_e := mu(A, n_squared, D_, energy), by=energy]
+        return(total[, mu_e %*% total_weight])
+            }))
 }
 
 print(mu_total(spectrum(12), 1, 1))
 
-print(summary[sample_thickness==12])
+fit = nls(
+        mean_R ~ mu_total(spectrum(12), A, particle_size),
+        data=summary[sample_thickness==12],
+        start=list(A=1e5))
 
-#fit = nls(
-        #mean_R ~ mu_total(spectrum(12), A, particle_size),
-        #data=summary[sample_thickness==12],
-        #start=list(A=1e5))
+print(summary(fit))
+prediction = data.frame(particle_size=seq(0.1, 8, len=100))
+prediction$mean_R = predict(fit, prediction)
 
-#print(summary(fit))
-#prediction = data.frame(particle_size=seq(0.1, 8, len=100))
-#print(predict(fit, prediction))
-
-
-#plot = ggplot(summary[sample_thickness==12]) + 
-    #geom_point(aes(x=particle_size, y=mean_R)) +
-    #geom_errorbar(aes(x=particle_size, ymax=mean_R + sd_R, ymin=mean_R -
-                      #sd_R))
-#print(plot)
+plot = ggplot(summary[sample_thickness==12]) + 
+    geom_point(aes(x=particle_size, y=mean_R)) +
+    geom_errorbar(aes(x=particle_size, ymax=mean_R + sd_R, ymin=mean_R -
+                      sd_R)) +
+    geom_line(data=prediction, aes(x=particle_size, y=mean_R))
+print(plot)
 warnings()
-#invisible(readLines(con="stdin", 1))
+invisible(readLines(con="stdin", 1))
