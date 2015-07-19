@@ -8,7 +8,6 @@
     %br/
     %a.btn.btn-dark.btn-lg{:href => "#experiment"} what's this plot about?
 
-/ About
 %section#analysis.about
   .container
     .row
@@ -17,7 +16,6 @@
         %p.lead
           The microspheres are analysed with a 100 keV design energy interferometer
 
-/ The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/
 %section#experiment.services.bg-primary
   .container
     .row.text-center
@@ -25,6 +23,15 @@
         %h2 the experiment
         %hr.small/
         .row
+          .col-md-3.col-sm-6
+            .service-item
+              %span.fa-stack.fa-4x
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-book.fa-stack-1x.text-primary
+              %h4
+                %a{href: "#theory"}
+                  %strong theory
+              %p a theoretical description of polychromatic scattering
           .col-md-3.col-sm-6
             .service-item
               %span.fa-stack.fa-4x
@@ -38,15 +45,6 @@
             .service-item
               %span.fa-stack.fa-4x
                 %i.fa.fa-circle.fa-stack-2x
-                %i.fa.fa-camera.fa-stack-1x.text-primary
-              %h4
-                %a{href: "#dataset-images"}
-                  %strong images
-              %p the raw images recorded with the mythen
-          .col-md-3.col-sm-6
-            .service-item
-              %span.fa-stack.fa-4x
-                %i.fa.fa-circle.fa-stack-2x
                 %i.fa.fa-bar-chart.fa-stack-1x.text-primary
               %h4
                 %a{href: "#dataset-plots"}
@@ -56,55 +54,67 @@
             .service-item
               %span.fa-stack.fa-4x
                 %i.fa.fa-circle.fa-stack-2x
-                %i.fa.fa-book.fa-stack-1x.text-primary
+                %i.fa.fa-camera.fa-stack-1x.text-primary
               %h4
-                %a{href: "#theory"}
-                  %strong theory
-              %p a theoretical description of polychromatic scattering
+                %a{href: "#dataset-images"}
+                  %strong images
+              %p the raw images recorded with the mythen
 
-/ Portfolio
-%section#dataset-images.portfolio
+%section#theory.call-to-action
   .container
     .row
-      .col-lg-10.col-lg-offset-1.text-center
-        %h2 single dataset raw images
+      .col-lg-10.col-lg-offset-1
+        %h2.text-center the theory
         %hr.small/
         .row
-          .col-md-6.col-md-offset-3.text-left
+          .col-md-12
             %p
-              The images are acquired with 19 phase steps, 5 s exposure per
-              step. Each sample is scanned 10 times with one flat scan per
-              line, for a total of 10 flat scans. Total exposure time: 31 m
-              40 s per sample.
+              This work is an attempt to reproduce and extend the experiments done by
+              %a{href: "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3407965/"} Lynch et al. (2011)
+              on the interpretation of dark-field contrast with respect to particle size.
+            %p#formula-68
+              We start from formula (68) of that paper for a monochromatic beam:
+              \\[
+              \\mu_d = \frac{3\pi}{\lambda^2}f |\Delta\chi|^2 d
+              \\begin{cases}
+              D' & \text{if } D' \leq 1\\
+              D' - \sqrt{D'^2 - 1}(1 + D'^{-2}/2) + (D'^{-1} + D'^{-3} / 4)\log\left(\frac{D' + \sqrt{D'^2 - 1}}{D' - \sqrt{D'^2 - 1}}\right) & \text{otherwise}
+              \\end{cases}
+              \\]
+              Where \( \mu_d = -\log B/t \) with \(B\) as the dark-field signal and \(t\) the sample thickness.
+              \\(D'\) is a normalized particle size equal to \(Dp/\lambda L\) with \(L\) the sample to detector distance, \(p\) the period of \(G_2\) and \(D\) the particle size.
+              \\(\chi\) is the complex refractive index.
             %p
-              The region of interest where the microspheres are located is
-              then manually selected after the reconstruction. Only this
-              region of interest is shown here and considered for the
-              analysis.
-        .row
-          .col-md-3.text-right
-            select dataset:
-          .col-md-6.text-center
-            - datasets = data.summary.sort {|a, b| a.particle_size <=> b.particle_size}
-            %select#select-dataset
-              - datasets.each do |s|
-                %option{value: s.file}
-                  =s.particle_size
-                  &micro;m particle size,
-                  =s.sample_thickness
-                  mm sample thickness
-        .row
-          .col-md-4
-            %h3 absorption
-            .portfolio-item#absorption-image
-          .col-md-4
-            %h3 dark field
-            .portfolio-item#darkfield-image
-          .col-md-4
-            %h3 ratio of the logarithms
-            .portfolio-item#ratio-image
+              Instead of \(\mu_d\) we will use a quantity that is proportional to that, but is more readily accessible from the experimental data, that is the ratio of the logarithms of the dark field and the transmission.
+              \\[
+              R = \frac{\log B}{\log A}
+              \\]
+            %p
+              In the case of a polychromatic beam, this formula needs to be computed for each energy bin \(\mathcal{E}\) of the spectrum and then summed over the spectrum:
+              \\[
+              R = \sum_\mathcal{E} w(\mathcal{E}) R(\mathcal{E})
+              \\]
+            %p
+              The spectral weights \(w(\mathcal{E})\) are computed starting from a
+              %a{href: "http://spekcalc.weebly.com/"} SpekCalc
+              simulated spectrum. The result of the simulation can be downloaded as a
+              %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/spectra/U210%20-%20160kVp%2045deg%201000Air%200Be%200Al%200Cu%200Sn%200W%200Ta%200Wa.csv"} csv file.
+              The spectrum is then attenuated according to the Beer-Lambert law as it goes through the sample and interacts with the detector. This reweighting is performed by
+              %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/theoretical_curves.py#L24"} a python script.
+              The refractive index \(n\) needed for this reweighting and for the function above is calculated through
+              %a{href: "https://bitbucket.org/psitomcat/nist_lookup"} this library.
+            %p
+              After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(A\) and \(B\) such that:
+              \\[
+              R(\mathcal{E}) = B + A|n|^2 \mathcal{E}u(\mathcal{E})
+              \\]
+              Where \(u(\mathcal{E})\) is the same conditional statement of
+              %a{href: "#formula-68"} (68).
+              \\(A\) is a normalization parameter and \(B\) can be interpreted as the intensity of the dark-field signal without any substructure in the sample.
+            %p
+              The results of the fit are shown in the plot
+              %a{href: "#top"} on top.
 
-/ Call to Action
 %section#setup.call-to-action.bg-primary
   .container
     .row
@@ -159,6 +169,7 @@
           .col-md-3.text-right
             select dataset:
           .col-md-6.text-center
+            - datasets = data.summary.sort {|a, b| a.particle_size <=> b.particle_size}
             %select#select-dataset-plots
               - datasets.each do |s|
                 %option{value: s.file}
@@ -181,57 +192,42 @@
             %h3 visibility
             .portfolio-item#visibility-histogram
 
-%section#theory.call-to-action.bg-primary
+%section#dataset-images.portfolio.bg-primary
   .container
     .row
-      .col-lg-10.col-lg-offset-1
-        %h2.text-center the theory
+      .col-lg-10.col-lg-offset-1.text-center
+        %h2 single dataset raw images
         %hr.small/
         .row
-          .col-md-12
+          .col-md-6.col-md-offset-3.text-left
             %p
-              This work is an attempt to reproduce and extend the experiments done by
-              %a{href: "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3407965/"} Lynch et al. (2011)
-              on the interpretation of dark-field contrast with respect to particle size.
-            %p#formula-68
-              We start from formula (68) of that paper for a monochromatic beam:
-              \\[
-              \\mu_d = \frac{3\pi}{\lambda^2}f |\Delta\chi|^2 d
-              \\begin{cases}
-              D' & \text{if } D' \leq 1\\
-              D' - \sqrt{D'^2 - 1}(1 + D'^{-2}/2) + (D'^{-1} + D'^{-3} / 4)\log\left(\frac{D' + \sqrt{D'^2 - 1}}{D' - \sqrt{D'^2 - 1}}\right) & \text{otherwise}
-              \\end{cases}
-              \\]
-              Where \( \mu_d = -\log B/t \) with \(B\) as the dark-field signal and \(t\) the sample thickness.
-              \\(D'\) is a normalized particle size equal to \(Dp/\lambda L\) with \(L\) the sample to detector distance, \(p\) the period of \(G_2\) and \(D\) the particle size.
-              \\(\chi\) is the complex refractive index.
+              The images are acquired with 19 phase steps, 5 s exposure per
+              step. Each sample is scanned 10 times with one flat scan per
+              line, for a total of 10 flat scans. Total exposure time: 31 m
+              40 s per sample.
             %p
-              Instead of \(\mu_d\) we will use a quantity that is proportional to that, but is more readily accessible from the experimental data, that is the ratio of the logarithms of the dark field and the transmission.
-              \\[
-              R = \frac{\log B}{\log A}
-              \\]
-            %p
-              In the case of a polychromatic beam, this formula needs to be computed for each energy bin \(\mathcal{E}\) of the spectrum and then summed over the spectrum:
-              \\[
-              R = \sum_\mathcal{E} w(\mathcal{E}) R(\mathcal{E})
-              \\]
-            %p
-              The spectral weights \(w(\mathcal{E})\) are computed starting from a
-              %a{href: "http://spekcalc.weebly.com/"} SpekCalc
-              simulated spectrum. The result of the simulation can be downloaded as a
-              %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/spectra/U210%20-%20160kVp%2045deg%201000Air%200Be%200Al%200Cu%200Sn%200W%200Ta%200Wa.csv"} csv file.
-              The spectrum is then attenuated according to the Beer-Lambert law as it goes through the sample and interacts with the detector. This reweighting is performed by
-              %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/theoretical_curves.py#L24"} a python script.
-              The refractive index \(n\) needed for this reweighting and for the function above is calculated through
-              %a{href: "https://bitbucket.org/psitomcat/nist_lookup"} this library.
-            %p
-              After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(A\) and \(B\) such that:
-              \\[
-              R(\mathcal{E}) = B + A|n|^2 \mathcal{E}u(\mathcal{E})
-              \\]
-              Where \(u(\mathcal{E})\) is the same conditional statement of
-              %a{href: "#formula-68"} (68).
-              \\(A\) is a normalization parameter and \(B\) can be interpreted as the intensity of the dark-field signal without any substructure in the sample.
-            %p
-              The results of the fit are shown in the plot
-              %a{href: "#top"} on top.
+              The region of interest where the microspheres are located is
+              then manually selected after the reconstruction. Only this
+              region of interest is shown here and considered for the
+              analysis.
+        .row
+          .col-md-3.text-right
+            select dataset:
+          .col-md-6.text-center
+            %select#select-dataset
+              - datasets.each do |s|
+                %option{value: s.file}
+                  =s.particle_size
+                  &micro;m particle size,
+                  =s.sample_thickness
+                  mm sample thickness
+        .row
+          .col-md-4
+            %h3 absorption
+            .portfolio-item#absorption-image
+          .col-md-4
+            %h3 dark field
+            .portfolio-item#darkfield-image
+          .col-md-4
+            %h3 ratio of the logarithms
+            .portfolio-item#ratio-image
