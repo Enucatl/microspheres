@@ -188,3 +188,50 @@
         %h2.text-center the theory
         %hr.small/
         .row
+          .col-md-12
+            %p
+              This work is an attempt to reproduce and extend the experiments done by
+              %a{href: "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3407965/"} Lynch et al. (2011)
+              on the interpretation of dark-field contrast with respect to particle size.
+            %p#formula-68
+              We start from formula (68) of that paper for a monochromatic beam:
+              \\[
+              \\mu_d = \frac{3\pi}{\lambda^2}f |\Delta\chi|^2 d
+              \\begin{cases}
+              D' & \text{if } D' \leq 1\\
+              D' - \sqrt{D'^2 - 1}(1 + D'^{-2}/2) + (D'^{-1} + D'^{-3} / 4)\log\left(\frac{D' + \sqrt{D'^2 - 1}}{D' - \sqrt{D'^2 - 1}}\right) & \text{otherwise}
+              \\end{cases}
+              \\]
+              Where \( \mu_d = -\log B/t \) with \(B\) as the dark-field signal and \(t\) the sample thickness.
+              \\(D'\) is a normalized particle size equal to \(Dp/\lambda L\) with \(L\) the sample to detector distance, \(p\) the period of \(G_2\) and \(D\) the particle size.
+              \\(\chi\) is the complex refractive index.
+            %p
+              Instead of \(\mu_d\) we will use a quantity that is proportional to that, but is more readily accessible from the experimental data, that is the ratio of the logarithms of the dark field and the transmission.
+              \\[
+              R = \frac{\log B}{\log A}
+              \\]
+            %p
+              In the case of a polychromatic beam, this formula needs to be computed for each energy bin \(\mathcal{E}\) of the spectrum and then summed over the spectrum:
+              \\[
+              R = \sum_\mathcal{E} w(\mathcal{E}) R(\mathcal{E})
+              \\]
+            %p
+              The spectral weights \(w(\mathcal{E})\) are computed starting from a
+              %a{href: "http://spekcalc.weebly.com/"} SpekCalc
+              simulated spectrum. The result of the simulation can be downloaded as a
+              %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/spectra/U210%20-%20160kVp%2045deg%201000Air%200Be%200Al%200Cu%200Sn%200W%200Ta%200Wa.csv"} csv file.
+              The spectrum is then attenuated according to the Beer-Lambert law as it goes through the sample and interacts with the detector. This reweighting is performed by
+              %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/theoretical_curves.py#L24"} a python script.
+              The refractive index \(n\) needed for this reweighting and for the function above is calculated through
+              %a{href: "https://bitbucket.org/psitomcat/nist_lookup"} this library.
+            %p
+              After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(A\) and \(B\) such that:
+              \\[
+              R(\mathcal{E}) = B + A|n|^2 \mathcal{E}u(\mathcal{E})
+              \\]
+              Where \(u(\mathcal{E})\) is the same conditional statement of
+              %a{href: "#formula-68"} (68).
+              \\(A\) is a normalization parameter and \(B\) can be interpreted as the intensity of the dark-field signal without any substructure in the sample.
+            %p
+              The results of the fit are shown in the plot
+              %a{href: "#top"} on top.
