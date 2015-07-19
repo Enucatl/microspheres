@@ -39,22 +39,35 @@ mu_total = function(spectrum, A, D) {
             }))
 }
 
-print(mu_total(spectrum(12), 1, 1))
+perform_fit = function(thickness) {
+    fit = nls(
+              mean_R ~ B + mu_total(spectrum(thickness), A, particle_size),
+              data=summary[sample_thickness==thickness],
+              start=list(A=1e5, B=2))
 
-fit = nls(
-        mean_R ~ mu_total(spectrum(12), A, particle_size),
-        data=summary[sample_thickness==12],
-        start=list(A=1e5))
+    print(summary(fit))
+    prediction = data.table(particle_size=seq(0.1, 8, len=100))
+    prediction$mean_R = predict(fit, prediction)
+    prediction$sample_thickness = thickness
+    return(prediction)
+}
 
-print(summary(fit))
-prediction = data.frame(particle_size=seq(0.1, 8, len=100))
-prediction$mean_R = predict(fit, prediction)
+prediction = rbindlist(list(perform_fit(12), perform_fit(45)))
+print(prediction)
 
-plot = ggplot(summary[sample_thickness==12]) + 
-    geom_point(aes(x=particle_size, y=mean_R)) +
+plot = ggplot(summary) + 
+    geom_point(aes(x=particle_size, y=mean_R, group=sample_thickness,
+                   colour=factor(sample_thickness)), size=5) +
     geom_errorbar(aes(x=particle_size, ymax=mean_R + sd_R, ymin=mean_R -
                       sd_R)) +
-    geom_line(data=prediction, aes(x=particle_size, y=mean_R))
+    geom_line(data=prediction, aes(x=particle_size, y=mean_R,
+                                   group=sample_thickness,
+                                   colour=factor(sample_thickness))) +
+    labs(
+         x="particle size (μm)",
+         y="ratio of the logs",
+         colour="sample thickness (mm)")
+X11(width=14, height=10)
 print(plot)
 warnings()
 invisible(readLines(con="stdin", 1))
