@@ -2,6 +2,9 @@
 
 all: summary.json 1.2.csv 4.5.csv
 
+fit_prediction.json: fit.R *.csv
+	./fit.R
+
 summary.json: build_summary.R ../source/data/*.csv
 	./build_summary.R > summary.json
 

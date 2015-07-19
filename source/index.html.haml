@@ -4,7 +4,7 @@
     %h1 Silica microspheres
     %h3 0.16 to 7.75 &micro;m
     .row
-      .col-md-6.col-md-offset-3#summary-plot{data: {src: data.summary.to_json}}
+      .col-md-6.col-md-offset-3#summary-plot{data: { exp: data.summary.to_json, theo: data.fit_prediction.to_json}}
     %br/
     %a.btn.btn-dark.btn-lg{:href => "#experiment"} the experiment
 

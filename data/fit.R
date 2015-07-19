@@ -68,7 +68,7 @@ plot = ggplot(summary) +
          colour="sample thickness (mm)")
 X11(width=14, height=10)
 print(plot)
-print(toJSON(prediction))
+write(toJSON(prediction), "fit_prediction.json")
 
 warnings()
 invisible(readLines(con="stdin", 1))

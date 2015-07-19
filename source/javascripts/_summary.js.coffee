@@ -1,9 +1,17 @@
 $ ->
     placeholder = "#summary-plot"
-    data = $(placeholder).data("src")
+    data = $(placeholder).data("exp")
+    prediction = $(placeholder).data("theo")
     width = $(placeholder).width()
     factor = 0.618
     height = width * factor
+    prediction = [{
+        sample_thickness: 12
+        values: prediction.filter (d) -> d.sample_thickness == 12
+    },{
+        sample_thickness: 45
+        values: prediction.filter (d) -> d.sample_thickness == 45
+    }]
 
     scatter = new d3.chart.Scatter()
         .width width
@@ -27,6 +35,22 @@ $ ->
         ]
         .nice()
 
+    line = new d3.chart.Line()
+        .width width
+        .height height
+        .x_value scatter.x_value()
+        .y_value scatter.y_value()
+        .color_value scatter.color_value()
+        .color_scale scatter.color_scale()
+        .x_scale scatter.x_scale()
+        .y_scale scatter.y_scale()
+        .margin {
+            bottom: 50
+            left: 50
+            top: 50
+            right: 50
+        }
+
     axes = new d3.chart.Axes()
         .x_scale scatter.x_scale()
         .y_scale scatter.y_scale()
@@ -43,6 +67,10 @@ $ ->
     d3.select placeholder
         .datum data
         .call scatter.draw
+
+    d3.select placeholder
+        .datum prediction
+        .call line.draw
 
     d3.select placeholder
         .select "svg"
