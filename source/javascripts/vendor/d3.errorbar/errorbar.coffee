@@ -50,8 +50,8 @@ class d3.chart.Errorbar extends d3.chart.BaseChart
             .classed "errorbar", true
             .attr "x1", (d) -> x_scale x_value d
             .attr "x2", (d) -> x_scale x_value d
-            .attr "y1", (d) -> y_scale(y_value(d) - 0.5 * y_error_value(d))
-            .attr "y2", (d) -> y_scale(y_value(d) + 0.5 * y_error_value(d))
+            .attr "y1", (d) -> y_scale(y_value(d) - y_error_value(d))
+            .attr "y2", (d) -> y_scale(y_value(d) + y_error_value(d))
             .style "marker-start", "url(#markerCap)"
             .style "marker-end", "url(#markerCap)"
 
