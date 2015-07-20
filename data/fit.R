@@ -39,7 +39,7 @@ mu = function(A, n_squared, D, e) {
 mu_total = function(spectrum, A, D) {
     return(sapply(D, function(D_) {
         total = spectrum[, mu_e := mu(A, n_squared, D_, energy), by=energy]
-        return(total[, mu_e %*% (visibility * total_weight)])
+        return(total[, mu_e %*% total_weight])
             }))
 }
 

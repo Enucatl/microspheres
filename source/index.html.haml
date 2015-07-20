@@ -72,6 +72,7 @@
               This work is an attempt to reproduce and extend the experiments done by
               %a{href: "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3407965/"} Lynch et al. (2011)
               on the interpretation of dark-field contrast with respect to particle size.
+            %h3 dark field given by microspheres
             %p#formula-68
               We start from formula (68) of that paper for a monochromatic beam:
               \\[
@@ -103,6 +104,28 @@
               %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/theoretical_curves.py#L24"} a python script.
               The refractive index \(n\) needed for this reweighting and for the function above is calculated through
               %a{href: "https://bitbucket.org/psitomcat/nist_lookup"} this library.
+
+            %h3 polychromatic visibility
+            %p
+              The visibility for each energy bin is calculated according to 
+              %a{href: "http://rsta.royalsocietypublishing.org/content/372/2010/20130027"} Thüring and Stampanoni (2014).
+            %p
+              The formula for the visibility at an energy \( \mathcal{E} \) with a \(\pi\) shift in the phase grating, a design
+              energy \(\mathcal{E_0}\) and a Talbot order \(m\) is
+              \\[
+              v(\mathcal{E}) = \frac{2}{\pi} \left\lvert \sin^2
+              \\Big(\frac{\pi}{2}\frac{\mathcal{E_0}}{\mathcal{E}}\Big) 
+              \\sin
+              \\Big(\frac{m\pi}{2}\frac{\mathcal{E_0}}{\mathcal{E}}\Big) 
+              \\right\rvert
+              \.
+              \\]
+            %p
+              This visibility as a function of energy is shown in the
+              %a{href: "#visibility-12"} theoretical visibility plot
+              below.
+
+            %h3 the fit
             %p
               After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(A\) and \(B\) such that:
               \\[
@@ -112,20 +135,30 @@
               %a{href: "#formula-68"} (68).
               \\(A\) is a normalization parameter and \(B\) can be interpreted as the intensity of the dark-field signal without any substructure in the sample.
             %p
-              The results of the fit are shown in the plot
+              A
+              %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/fit.R#L47"} nonlinear fit function
+              in R is used. The results of the fit are shown in the plot
               %a{href: "#top"} on top.
           .row
             .col-md-6.col-xs-12.theoretical-histogram#photons-12{data: {src: "data/1.2.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
+              %h3 source spectrum
             .col-md-6.col-xs-12.theoretical-histogram#n_squared-12{data: {src: "data/1.2.csv", var: "n_squared", ytitle: "|n|² / 1 (keV)", logarithmic: true}}
+              %h3 refractive index of silica
           .row
             .col-md-6.col-xs-12.theoretical-histogram#visibility-12{data: {src: "data/1.2.csv", var: "visibility", ytitle: "visibility / 1 (keV)", normalize: true}}
+              %h3 theoretical visibility
             .col-md-6.col-xs-12.theoretical-histogram#detector-efficiency-12{data: {src: "data/1.2.csv", var: "detector_efficiency", ytitle: "detector efficiency / 1 (keV)"}}
+              %h3 detector efficiency
           .row
             .col-md-6.col-xs-12.theoretical-histogram#absorbed-12{data: {src: "data/1.2.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
+              %h3 transmission through 12 mm SiO₂
             .col-md-6.col-xs-12.theoretical-histogram#absorbed-45{data: {src: "data/4.5.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
+              %h3 transmission through 45 mm SiO₂
           .row
             .col-md-6.col-xs-12.theoretical-histogram#total-12{data: {src: "data/1.2.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
+              %h3 total weight \(w(\mathcal{E})\), 12 mm
             .col-md-6.col-xs-12.theoretical-histogram#total-45{data: {src: "data/4.5.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
+              %h3 total weight \(w(\mathcal{E})\), 45 mm
 
 
 %section#setup.call-to-action.bg-primary
