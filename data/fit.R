@@ -9,10 +9,10 @@ setkey(summary, "sample_thickness")
 
 spectrum = function(thickness) {
     if (thickness == 12) {
-        return(fread("1.2.csv"))
+        return(fread("../source/data/1.2.csv"))
     }
     else if (thickness == 45) {
-        return(fread("4.5.csv"))
+        return(fread("../source/data/4.5.csv"))
     }
 }
 
@@ -39,7 +39,7 @@ mu = function(A, n_squared, D, e) {
 mu_total = function(spectrum, A, D) {
     return(sapply(D, function(D_) {
         total = spectrum[, mu_e := mu(A, n_squared, D_, energy), by=energy]
-        return(total[, mu_e %*% total_weight])
+        return(total[, mu_e %*% (visibility * total_weight)])
             }))
 }
 

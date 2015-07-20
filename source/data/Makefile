@@ -63,3 +63,9 @@ S00401_S00420.csv: S00401_S00420.hdf5 hdf2csv.py Makefile
 
 S00421_S00440.csv: S00421_S00440.hdf5 hdf2csv.py Makefile
 	python hdf2csv.py $< --crop 500 600
+
+1.2.csv: theoretical_curves.py
+	python $< "spectra/U210 - 160kVp 45deg 1000Air 0Be 0Al 0Cu 0Sn 0W 0Ta 0Wa.csv" --thickness 1.2
+
+4.5.csv: theoretical_curves.py
+	python $< "spectra/U210 - 160kVp 45deg 1000Air 0Be 0Al 0Cu 0Sn 0W 0Ta 0Wa.csv" --thickness 4.5

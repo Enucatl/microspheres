@@ -12,3 +12,4 @@
 //= require _histograms
 //= require _select_dataset
 //= require _summary
+//= require _theoretical
