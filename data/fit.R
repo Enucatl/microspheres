@@ -47,14 +47,14 @@ perform_fit = function(thickness) {
     fit = nls(
               mean_R ~ B + mu_total(spectrum(thickness), A, particle_size),
               data=summary[sample_thickness==thickness],
-              start=list(A=1e5, B=2))
+              start=list(A=1e4, B=2.3))
 
     fit_dt = data.table(summary(fit)$parameters)
     dt = data.table(
-        A=fit_dt[1, "Estimate", with=FALSE][[1]],
-        err_A=fit_dt[1, "Std. Error", with=FALSE][[1]],
-        B=fit_dt[2, "Estimate", with=FALSE][[1]],
-        err_B=fit_dt[2, "Std. Error", with=FALSE][[1]],
+        A=signif(fit_dt[1, "Estimate", with=FALSE][[1]], 2),
+        err_A=signif(fit_dt[1, "Std. Error", with=FALSE][[1]], 2),
+        B=signif(fit_dt[2, "Estimate", with=FALSE][[1]], 3),
+        err_B=signif(fit_dt[2, "Std. Error", with=FALSE][[1]], 2),
         sample_thickness=thickness
         )
     prediction = data.table(particle_size=seq(0.1, 8, len=100))
@@ -79,10 +79,10 @@ plot = ggplot(summary) +
          x="particle size (μm)",
          y="ratio of the logs",
          colour="sample thickness (mm)")
-#X11(width=14, height=10)
-#print(plot)
+X11(width=14, height=10)
+print(plot)
 write(toJSON(prediction), "fit_prediction.json")
 write(toJSON(pars), "fit_pars.json")
 
 #warnings()
-#invisible(readLines(con="stdin", 1))
+invisible(readLines(con="stdin", 1))
