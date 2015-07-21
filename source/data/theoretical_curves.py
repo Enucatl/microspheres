@@ -27,11 +27,26 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order, thickness):
                 np.sin(talbot_order * np.pi / 2 * design_energy / energy))
             delta, beta, sio2_atlen = xdb.xray_delta_beta(
                 'SiO2', 2.65, energy * 1e3)
+            _, _, plastic_atlen = xdb.xray_delta_beta(
+                'C2H4', 1.1, energy * 1e3)
+            _, _, al_atlen = xdb.xray_delta_beta(
+                'Al', 2.7, energy * 1e3)
+            _, _, be_atlen = xdb.xray_delta_beta(
+                'Be', 1.8, energy * 1e3)
             _, _, si_atlen = xdb.xray_delta_beta('Si', 2.33, energy * 1e3)
             detector_efficiency = 1 - np.exp(-2 / si_atlen)
             absorbed_in_sample = np.exp(-thickness / sio2_atlen)
+            other_absorption = (
+                np.exp(-0.2 / plastic_atlen) *
+                np.exp(-0.0016 / al_atlen) *
+                np.exp(-0.08 / be_atlen)
+            )  # detector window, holders...
             total_weight_no_vis = (
-                photons * detector_efficiency * absorbed_in_sample)
+                photons *
+                other_absorption *
+                detector_efficiency *
+                absorbed_in_sample
+            )
             total_weight = total_weight_no_vis * visibility
             n_squared = delta ** 2 + beta ** 2
             output.writerow([energy, photons, n_squared, visibility,
