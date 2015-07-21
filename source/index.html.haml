@@ -66,122 +66,165 @@
       .col-lg-10.col-lg-offset-1
         %h2.text-center the theory
         %hr.small/
+
         .row
-          .col-md-12
-            %p
-              This work is an attempt to reproduce and extend the experiments done by
-              %a{href: "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3407965/"} Lynch et al. (2011)
-              on the interpretation of dark-field contrast with respect to particle size.
-            %h3 dark field given by microspheres
-            %p#formula-68
-              We start from formula (68) of that paper for a monochromatic beam:
-              \\[
-              \\mu_d = \frac{3\pi}{\lambda^2}f |\Delta\chi|^2 d
-              \\begin{cases}
-              D' & \text{if } D' \leq 1\\
-              D' - \sqrt{D'^2 - 1}(1 + D'^{-2}/2) + (D'^{-1} + D'^{-3} / 4)\log\left(\frac{D' + \sqrt{D'^2 - 1}}{D' - \sqrt{D'^2 - 1}}\right) & \text{otherwise}
-              \\end{cases}
-              \\]
-              Where \( \mu_d = -\log B/t \) with \(B\) as the dark-field signal and \(t\) the sample thickness.
-              \\(D'\) is a normalized particle size equal to \(Dp/\lambda L\) with \(L\) the sample to detector distance, \(p\) the period of \(G_2\) and \(D\) the particle size.
-              \\(\chi\) is the complex refractive index.
-            %p
-              Instead of \(\mu_d\) we will use a quantity that is proportional to that, but is more readily accessible from the experimental data, that is the ratio of the logarithms of the dark field and the transmission.
-              \\[
-              R = \frac{\log B}{\log A}
-              \\]
-            %p
-              In the case of a polychromatic beam, this formula needs to be computed for each energy bin \(\mathcal{E}\) of the spectrum and then summed over the spectrum:
-              \\[
-              R = \sum_\mathcal{E} w(\mathcal{E}) R(\mathcal{E})
-              \\]
-            %p
-              The spectral weights \(w(\mathcal{E})\) are computed starting from a
-              %a{href: "http://spekcalc.weebly.com/"} SpekCalc
-              simulated spectrum. The result of the simulation can be downloaded as a
-              %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/spectra/U210%20-%20160kVp%2045deg%201000Air%200Be%200Al%200Cu%200Sn%200W%200Ta%200Wa.csv"} csv file.
-              The spectrum is then attenuated according to the Beer-Lambert law as it goes through the sample and interacts with the detector. This reweighting is performed by
-              %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/theoretical_curves.py#L24"} a python script.
-              The refractive index \(n\) needed for this reweighting and for the function above is calculated through
-              %a{href: "https://bitbucket.org/psitomcat/nist_lookup"} this library.
+          %p
+            This work is an attempt to reproduce and extend the experiments done by
+            %a{href: "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3407965/"} Lynch et al. (2011)
+            on the interpretation of dark-field contrast with respect to particle size.
 
-            %h3 polychromatic visibility
-            %p
-              The visibility for each energy bin is calculated according to 
-              %a{href: "http://rsta.royalsocietypublishing.org/content/372/2010/20130027"} Thüring and Stampanoni (2014).
-            %p
-              The formula for the visibility at an energy \( \mathcal{E} \) with a \(\pi\) shift in the phase grating, a design
-              energy \(\mathcal{E_0}\) and a Talbot order \(m\) is
-              \\[
-              v(\mathcal{E}) = \frac{2}{\pi} \left\lvert \sin^2
-              \\Big(\frac{\pi}{2}\frac{\mathcal{E_0}}{\mathcal{E}}\Big) 
-              \\sin
-              \\Big(\frac{m\pi}{2}\frac{\mathcal{E_0}}{\mathcal{E}}\Big) 
-              \\right\rvert
-              \.
-              \\]
-            %p
-              This visibility as a function of energy is shown in the
-              %a{href: "#visibility-12"} theoretical visibility plot
-              below.
+        .row
+          %h3 dark field given by microspheres
+          %p#formula-68
+            We start from formula (68) of that paper for a monochromatic beam:
+            \\[
+            \\mu_d = \frac{3\pi}{\lambda^2}f |\Delta\chi|^2 d
+            \\begin{cases}
+            D' & \text{if } D' \leq 1\\
+            D' - \sqrt{D'^2 - 1}(1 + D'^{-2}/2) + (D'^{-1} + D'^{-3} / 4)\log\left(\frac{D' + \sqrt{D'^2 - 1}}{D' - \sqrt{D'^2 - 1}}\right) & \text{otherwise}
+            \\end{cases}
+            \\]
+            Where \( \mu_d = -\log B/t \) with \(B\) as the dark-field signal and \(t\) the sample thickness.
+            \\(D'\) is a normalized particle size equal to \(Dp/\lambda L\) with \(L\) the sample to detector distance, \(p\) the period of \(G_2\) and \(D\) the particle size.
+            \\(\chi\) is the complex refractive index.
+          %p
+            Instead of \(\mu_d\) we will use a quantity that is proportional to that, but is more readily accessible from the experimental data, that is the ratio of the logarithms of the dark field and the transmission.
+            \\[
+            R = \frac{\log B}{\log A}
+            \\]
+          %p
+            In the case of a polychromatic beam, this formula needs to be computed for each energy bin \(\mathcal{E}\) of the spectrum and then summed over the spectrum:
+            \\[
+            R = \sum_\mathcal{E} w(\mathcal{E}) R(\mathcal{E})
+            \\]
+          %p
+            The spectral weights \(w(\mathcal{E})\) are computed starting from a
+            %a{href: "http://spekcalc.weebly.com/"} SpekCalc
+            simulated spectrum. The result of the simulation can be downloaded as a
+            %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/spectra/U210%20-%20160kVp%2045deg%201000Air%200Be%200Al%200Cu%200Sn%200W%200Ta%200Wa.csv"} csv file.
+            The spectrum is then attenuated according to the Beer-Lambert law as it goes through the sample and interacts with the detector. This reweighting is performed by
+            %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/theoretical_curves.py#L24"} a python script.
+            The refractive index \(n\) needed for this reweighting and for the function above is calculated through
+            %a{href: "https://bitbucket.org/psitomcat/nist_lookup"} this library.
 
-            %h3 the fit
-            %p
-              After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(A\) and \(B\) such that:
-              \\[
-              R(\mathcal{E}) = B + A|n|^2 \mathcal{E}u(\mathcal{E})
-              \\]
-              Where \(u(\mathcal{E})\) is the same conditional statement of
-              %a{href: "#formula-68"} (68).
-              \\(A\) is a normalization parameter and \(B\) can be interpreted as the intensity of the dark-field signal without any substructure in the sample.
-            %p
-              A
-              %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/fit.R#L47"} nonlinear fit function
-              in R is used. The results of the fit are shown in the plot
-              %a{href: "#top"} on top
-              and in the following table:
+        .row
+          %h3 polychromatic visibility
+          %p
+            The visibility for each energy bin is calculated according to 
+            %a{href: "http://rsta.royalsocietypublishing.org/content/372/2010/20130027"} Thüring and Stampanoni (2014).
+          %p
+            The formula for the visibility at an energy \( \mathcal{E} \) with a \(\pi\) shift in the phase grating, a design
+            energy \(\mathcal{E_0}\) and a Talbot order \(m\) is
+            \\[
+            v(\mathcal{E}) = \frac{2}{\pi} \left\lvert \sin^2
+            \\Big(\frac{\pi}{2}\frac{\mathcal{E_0}}{\mathcal{E}}\Big) 
+            \\sin
+            \\Big(\frac{m\pi}{2}\frac{\mathcal{E_0}}{\mathcal{E}}\Big) 
+            \\right\rvert
+            \.
+            \\]
+          %p
+            This visibility as a function of energy is shown in the
+            %a{href: "#visibility-12"} theoretical visibility plot
+            below.
 
-              .col-md-offset-3.col-md-6.col-xs-12
-                %table.table.text-center
-                  %thead
+        .row
+          %h3 the fit
+          %p
+            After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(A\) and \(B\) such that:
+            \\[
+            R(\mathcal{E}) = R_0 + C|n|^2 \mathcal{E}u(\mathcal{E})
+            \\]
+            Where \(u(\mathcal{E})\) is the conditional statement of
+            %a{href: "#formula-68"} (68).
+            \\(C\) is a normalization parameter and \(R_0\) can be interpreted as the intensity of the dark-field signal without any substructure in the sample.
+          %p
+            A
+            %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/fit.R#L47"} nonlinear fit function
+            in R is used. The results of the fit are shown in the plot
+            %a{href: "#top"} on top
+            and in the following table:
+
+          .row
+            .col-md-offset-3.col-md-6.col-xs-12
+              %table.table.text-center
+                %thead
+                  %tr
+                    %th.text-center sample thickness (mm)
+                    %th.text-center \(R_0\)
+                    %th.text-center \(C (times 1000)\)
+                %tbody
+                  -data.fit_pars.each do |row|
                     %tr
-                      %th.text-center sample thickness (mm)
-                      %th.text-center B
-                      %th.text-center A (\(\times 1000\))
-                  %tbody
-                    -data.fit_pars.each do |row|
-                      %tr
-                        %td
-                          =row.sample_thickness
-                        %td
-                          =row.B
-                          &pm;
-                          =row.err_B
-                        %td
-                          =row.A / 1000
-                          &pm;
-                          =row.err_A / 1000
+                      %td
+                        =row.sample_thickness
+                      %td
+                        =row.B
+                        &pm;
+                        =row.err_B
+                      %td
+                        =row.A / 1000
+                        &pm;
+                        =row.err_A / 1000
 
-          .row
-            .col-md-6.col-xs-12.theoretical-histogram#photons-12{data: {src: "data/1.2.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
-              %h3 source spectrum
-            .col-md-6.col-xs-12.theoretical-histogram#n_squared-12{data: {src: "data/1.2.csv", var: "n_squared", ytitle: "|n|² / 1 (keV)", logarithmic: true}}
-              %h3 refractive index of silica
-          .row
-            .col-md-6.col-xs-12.theoretical-histogram#visibility-12{data: {src: "data/1.2.csv", var: "visibility", ytitle: "visibility / 1 (keV)", normalize: true}}
-              %h3 theoretical visibility
-            .col-md-6.col-xs-12.theoretical-histogram#detector-efficiency-12{data: {src: "data/1.2.csv", var: "detector_efficiency", ytitle: "detector efficiency / 1 (keV)"}}
-              %h3 detector efficiency
-          .row
-            .col-md-6.col-xs-12.theoretical-histogram#absorbed-12{data: {src: "data/1.2.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
-              %h3 transmission through 12 mm SiO₂
-            .col-md-6.col-xs-12.theoretical-histogram#absorbed-45{data: {src: "data/4.5.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
-              %h3 transmission through 45 mm SiO₂
-          .row
-            .col-md-6.col-xs-12.theoretical-histogram#total-12{data: {src: "data/1.2.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
-              %h3 total weight \(w(\mathcal{E})\), 12 mm
-            .col-md-6.col-xs-12.theoretical-histogram#total-45{data: {src: "data/4.5.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
-              %h3 total weight \(w(\mathcal{E})\), 45 mm
+        .row
+          %h3 the meaning of the fit constant \(B\)
+          %p
+            A previous experiment performed with samples without features on
+            the micrometer scale, and a very similar setup with 120 keV
+            design energy, showed that the ratio of the logarithms is a
+            nonzero value and it is almost completely independent of the
+            material. The values between 2 and 3 obtained with the fit on
+            the microspheres are consistent with these earlier values and
+            can provide a justification for merging these two regimes into
+            one understanding of the dark-field signal.
+
+        .row
+          .col-md-offset-2.col-md-8.col-xs-12#aggregated
+
+        .row
+          %h3 conclusions
+          %p
+            With this experiment we show that we can understand the
+            dark-field signal in the context of high-energy grating
+            interferometry as given by two contributions:
+            %ul
+              %li
+                a constant value, possibly depending on the setup, but
+                independent on the material. This is to be expected, since at
+                higher energies both the scattering and absorption are
+                proportional to the electron density, and the ratio is the
+                same for all materials.
+              %li
+                an additional contribution for grating interferometry,
+                given by structures that are much smaller than the pixel size,
+                on the order of \(d = L \lambda / p \approx 1.5\) &micro;m (see the <a href="#formula-68">equation</a> above).
+                This is a truly complementary signal that can not be retrieved
+                with traditional absorption radiography.
+
+        .row
+          %h3 how are the \(w(\mathcal{E})\) calculated?
+          %p The plots below show all the steps that lead to the final weighting of the spectrum.
+        .row
+          .col-md-6.col-xs-12.theoretical-histogram#photons-12{data: {src: "data/1.2.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
+            %h3 source spectrum
+          .col-md-6.col-xs-12.theoretical-histogram#n_squared-12{data: {src: "data/1.2.csv", var: "n_squared", ytitle: "|n|² / 1 (keV)", logarithmic: true}}
+            %h3 refractive index of silica
+        .row
+          .col-md-6.col-xs-12.theoretical-histogram#visibility-12{data: {src: "data/1.2.csv", var: "visibility", ytitle: "visibility / 1 (keV)", normalize: true}}
+            %h3 theoretical visibility
+          .col-md-6.col-xs-12.theoretical-histogram#detector-efficiency-12{data: {src: "data/1.2.csv", var: "detector_efficiency", ytitle: "detector efficiency / 1 (keV)"}}
+            %h3 detector efficiency
+        .row
+          .col-md-6.col-xs-12.theoretical-histogram#absorbed-12{data: {src: "data/1.2.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
+            %h3 transmission through 12 mm SiO₂
+          .col-md-6.col-xs-12.theoretical-histogram#absorbed-45{data: {src: "data/4.5.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
+            %h3 transmission through 45 mm SiO₂
+        .row
+          .col-md-6.col-xs-12.theoretical-histogram#total-12{data: {src: "data/1.2.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
+            %h3 total weight \(w(\mathcal{E})\), 12 mm
+          .col-md-6.col-xs-12.theoretical-histogram#total-45{data: {src: "data/4.5.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
+            %h3 total weight \(w(\mathcal{E})\), 45 mm
 
 
 %section#setup.call-to-action.bg-primary

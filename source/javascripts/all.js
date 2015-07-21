@@ -13,3 +13,4 @@
 //= require _select_dataset
 //= require _summary
 //= require _theoretical
+//= require _aggregated
