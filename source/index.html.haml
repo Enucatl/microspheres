@@ -139,6 +139,18 @@
               %a{href: "https://github.com/Enucatl/microspheres/blob/master/data/fit.R#L47"} nonlinear fit function
               in R is used. The results of the fit are shown in the plot
               %a{href: "#top"} on top.
+              %table.table
+                %thead
+                  %tr
+                    %th sample thickness (mm)
+                    %th B
+                    %th A
+                %tbody
+                  =data.fit_pars.each do |row|
+                    %tr
+                      %td =row.sample_thickness
+                      %td =row.B &pm; =row.err_B
+                      %td =row.A &pm; =row.err_A
           .row
             .col-md-6.col-xs-12.theoretical-histogram#photons-12{data: {src: "data/1.2.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
               %h3 source spectrum

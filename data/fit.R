@@ -49,14 +49,23 @@ perform_fit = function(thickness) {
               data=summary[sample_thickness==thickness],
               start=list(A=1e5, B=2))
 
-    print(summary(fit))
+    fit_dt = data.table(summary(fit)$parameters)
+    dt = data.table(
+        A=fit_dt[1, "Estimate", with=FALSE][[1]],
+        err_A=fit_dt[1, "Std. Error", with=FALSE][[1]],
+        B=fit_dt[2, "Estimate", with=FALSE][[1]],
+        err_B=fit_dt[2, "Std. Error", with=FALSE][[1]],
+        sample_thickness=thickness
+        )
     prediction = data.table(particle_size=seq(0.1, 8, len=100))
     prediction$mean_R = predict(fit, prediction)
     prediction$sample_thickness = thickness
-    return(prediction)
+    return(list(prediction=prediction, fit_pars=dt))
 }
 
-prediction = rbindlist(list(perform_fit(12), perform_fit(45)))
+fits = list(perform_fit(12), perform_fit(45))
+prediction = rbindlist(list(fits[[1]]$prediction, fits[[2]]$prediction))
+pars = rbindlist(list(fits[[1]]$fit_pars, fits[[2]]$fit_pars))
 
 plot = ggplot(summary) + 
     geom_point(aes(x=particle_size, y=mean_R, group=sample_thickness,
@@ -70,9 +79,10 @@ plot = ggplot(summary) +
          x="particle size (μm)",
          y="ratio of the logs",
          colour="sample thickness (mm)")
-X11(width=14, height=10)
-print(plot)
+#X11(width=14, height=10)
+#print(plot)
 write(toJSON(prediction), "fit_prediction.json")
+write(toJSON(pars), "fit_pars.json")
 
-warnings()
-invisible(readLines(con="stdin", 1))
+#warnings()
+#invisible(readLines(con="stdin", 1))

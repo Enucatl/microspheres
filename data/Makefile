@@ -1,6 +1,9 @@
 .PHONY: all
 
-all: summary.json fit_prediction.json
+all: summary.json fit_prediction.json fit_pars.json
+
+fit_pars.json: fit.R ../source/data/1.2.csv ../source/data/4.5.csv
+	./$<
 
 fit_prediction.json: fit.R ../source/data/1.2.csv ../source/data/4.5.csv
 	./$<
