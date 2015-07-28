@@ -12,7 +12,7 @@
   .container
     .row
       .col-lg-12.text-center
-        %h2 overview
+        %h2 Overview
         %p.lead
           The microspheres are analysed with a 100 keV design energy interferometer
 
@@ -20,7 +20,7 @@
   .container
     .row.text-center
       .col-lg-10.col-lg-offset-1
-        %h2 the experiment
+        %h2 Experiment
         %hr.small/
         .row
           .col-md-3.col-sm-6
@@ -31,7 +31,7 @@
               %h4
                 %a{href: "#theory"}
                   %strong theory
-              %p a theoretical description of polychromatic scattering
+              %p A theoretical description of polychromatic scattering
           .col-md-3.col-sm-6
             .service-item
               %span.fa-stack.fa-4x
@@ -64,7 +64,7 @@
   .container
     .row
       .col-lg-10.col-lg-offset-1
-        %h2.text-center the theory
+        %h2.text-center Theory
         %hr.small/
 
         .row
@@ -74,7 +74,7 @@
             on the interpretation of dark-field contrast with respect to particle size.
 
         .row
-          %h3 dark field given by microspheres
+          %h3 Dark field given by microspheres
           %p#formula-68
             We start from formula (68) of that paper for a monochromatic beam:
             \\[
@@ -108,7 +108,7 @@
             %a{href: "https://bitbucket.org/psitomcat/nist_lookup"} this library.
 
         .row
-          %h3 polychromatic visibility
+          %h3 Polychromatic visibility
           %p
             The visibility for each energy bin is calculated according to 
             %a{href: "http://rsta.royalsocietypublishing.org/content/372/2010/20130027"} Thüring and Stampanoni (2014).
@@ -129,7 +129,7 @@
             below.
 
         .row
-          %h3 the fit
+          %h3 The fit
           %p
             After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(C\) and \(R_0\) such that:
             \\[
@@ -168,7 +168,7 @@
                         =row.err_A / 1000
 
         .row
-          %h3 the meaning of the fit constant \(R_0\)
+          %h3 The meaning of the fit constant \(R_0\)
           %p
             A previous experiment performed with samples without features on
             the micrometer scale, and a very similar setup with 120 keV
@@ -183,7 +183,7 @@
           .col-md-offset-2.col-md-8.col-xs-12#aggregated
 
         .row
-          %h3 conclusions
+          %h3 Conclusions
           %p
             With this experiment we show that we can understand the
             dark-field signal in the context of high-energy grating
@@ -196,15 +196,21 @@
                 proportional to the electron density, and the ratio is the
                 same for all materials.
               %li
-                an additional contribution for grating interferometry,
-                given by structures that are much smaller than the pixel size,
-                on the order of \(d = L \lambda / p \approx 1.5\) &micro;m (see the <a href="#formula-68">equation</a> above).
-                This is a truly complementary signal that can not be retrieved
-                with traditional absorption radiography.
+                an additional contribution for grating interferometry, given
+                by structures that are much smaller than the pixel size, on
+                the order of \(d = L \lambda / p \approx 1.5\) &micro;m (see
+                the <a href="#formula-68">equation</a> above). This is a
+                truly complementary signal that can not be retrieved with
+                traditional absorption radiography.
 
         .row
-          %h3 how are the \(w(\mathcal{E})\) calculated?
-          %p The plots below show all the steps that lead to the final weighting of the spectrum.
+          %h3 How are the \(w(\mathcal{E})\) calculated?
+          %p
+            The plots below show all the steps that lead to the final
+            weighting of the spectrum. The final weights are the product of
+            the source spectrum, refractive index of silica squared,
+            visibility, detector efficiency and the photons transmitted by the
+            sample. Only this last factor depends on the sample thickness.
         .row
           .col-md-6.col-xs-12.theoretical-histogram#photons-12{data: {src: "data/1.2.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
             %h3 source spectrum
@@ -231,7 +237,7 @@
   .container
     .row
       .col-lg-10.col-lg-offset-1
-        %h2.text-center the setup
+        %h2.text-center Setup
         %hr.small/
         .row
           .col-md-3
@@ -275,7 +281,7 @@
   .container
     .row
       .col-lg-10.col-lg-offset-1.text-center
-        %h2 single dataset plots
+        %h2 Single dataset plots
         %hr.small/
         .row
           .col-md-3.text-right
@@ -308,7 +314,7 @@
   .container
     .row
       .col-lg-10.col-lg-offset-1.text-center
-        %h2 single dataset raw images
+        %h2 Single dataset raw images
         %hr.small/
         .row
           .col-md-6.col-md-offset-3.text-left
