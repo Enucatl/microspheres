@@ -18,7 +18,7 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order, thickness):
     with open("{0}.csv".format(thickness), "w") as output_csv:
         output = csv.writer(output_csv)
         output.writerow(
-            ["energy", "photons", "n_squared", "visibility",
+            ["energy", "photons", "n_squared", "beta", "visibility",
              "detector_efficiency", "absorbed_in_sample", "total_weight",
              "total_weight_no_vis"])
         for energy, photons in spectrum:
@@ -49,7 +49,7 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order, thickness):
             )
             total_weight = total_weight_no_vis * visibility
             n_squared = delta ** 2 + beta ** 2
-            output.writerow([energy, photons, n_squared, visibility,
+            output.writerow([energy, photons, n_squared, beta, visibility,
                              detector_efficiency, absorbed_in_sample,
                              total_weight, total_weight_no_vis])
 

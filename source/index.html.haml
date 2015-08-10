@@ -90,7 +90,7 @@
             \\(D'\) is a normalized particle size equal to \(Dp/\lambda L\) with \(L\) the sample to detector distance, \(p\) the period of \(G_2\) and \(D\) the particle size.
             \\(\chi\) is the complex refractive index.
           %p
-            Instead of \(\mu_d\) we will use a quantity that is proportional to that, but is more readily accessible from the experimental data, that is the ratio of the logarithms of the dark field and the transmission.
+            Instead of \(\mu_d\) we will use a quantity that is proportional to that through the absorption coefficient \(\mu = 2k\beta\), but is more readily accessible from the experimental data, that is the ratio of the logarithms of the dark field and the transmission.
             \\[
             R = \frac{\log B}{\log A}
             \\]
@@ -135,7 +135,7 @@
           %p
             After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(C\) and \(R_0\) such that:
             \\[
-            R(\mathcal{E}) = R_0 + C|n|^2 \mathcal{E}u(\mathcal{E})
+            R(\mathcal{E}) = R_0 + C \dfrac{|n|^2}{\beta} u(\mathcal{E})
             \\]
             Where \(u(\mathcal{E})\) is the conditional statement of
             %a{href: "#formula-68"} (68).
@@ -154,7 +154,7 @@
                   %tr
                     %th.text-center sample thickness (mm)
                     %th.text-center \(R_0\)
-                    %th.text-center \(C (\times 1000)\)
+                    %th.text-center \(C (\times 10^{-3})\)
                 %tbody
                   -data.fit_pars.each do |row|
                     %tr
@@ -165,9 +165,9 @@
                         &pm;
                         =row.err_B
                       %td
-                        =row.A / 1000
+                        =row.A
                         &pm;
-                        =row.err_A / 1000
+                        =row.err_A
 
         .row
           %h3 The meaning of the fit constant \(R_0\)
