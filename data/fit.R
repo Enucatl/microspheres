@@ -9,10 +9,14 @@ setkey(summary, "sample_thickness")
 
 spectrum = function(thickness) {
     if (thickness == 12) {
-        return(fread("../source/data/1.2.csv"))
+        dt = fread("../source/data/1.2.csv")
+        norm = 1 / dt[, sum(total_weight)]
+        return(dt[, total_weight := norm * total_weight])
     }
     else if (thickness == 45) {
-        return(fread("../source/data/4.5.csv"))
+        dt = fread("../source/data/1.2.csv")
+        norm = 1 / dt[, sum(total_weight)]
+        return(dt[, total_weight := norm * total_weight])
     }
 }
 
@@ -50,8 +54,8 @@ perform_fit = function(thickness) {
 
     fit_dt = data.table(summary(fit)$parameters)
     dt = data.table(
-        A=signif(1000 * fit_dt[1, "Estimate", with=FALSE][[1]], 3),
-        err_A=signif(1000 * fit_dt[1, "Std. Error", with=FALSE][[1]], 2),
+        A=signif(1e-3 * fit_dt[1, "Estimate", with=FALSE][[1]], 2),
+        err_A=signif(1e-3 * fit_dt[1, "Std. Error", with=FALSE][[1]], 2),
         B=signif(fit_dt[2, "Estimate", with=FALSE][[1]], 3),
         err_B=signif(fit_dt[2, "Std. Error", with=FALSE][[1]], 2),
         sample_thickness=thickness
@@ -65,7 +69,8 @@ perform_fit = function(thickness) {
 fits = list(perform_fit(12), perform_fit(45))
 prediction = rbindlist(list(fits[[1]]$prediction, fits[[2]]$prediction))
 pars = rbindlist(list(fits[[1]]$fit_pars, fits[[2]]$fit_pars))
-print(fits)
+print(pars)
+
 
 
 plot = ggplot(summary) + 
@@ -84,6 +89,7 @@ X11(width=14, height=10)
 print(plot)
 write(toJSON(prediction), "fit_prediction.json")
 write(toJSON(pars), "fit_pars.json")
+
 
 #warnings()
 invisible(readLines(con="stdin", 1))
