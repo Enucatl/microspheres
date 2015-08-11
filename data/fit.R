@@ -16,11 +16,11 @@ spectrum = function(thickness) {
     }
 }
 
-mu = function(A, n_squared, D, e, beta, autocorrelation_factor) {
+mu = function(A, n_squared, D, e, beta) {
     # distance = 20cm = 20e4 um
     # hc = 1.24e-3 um keV
     # period = 2.8 um
-    #autocorrelation_factor = 1.24e-3 * 20e4 / 2.8
+    autocorrelation_factor = 1.24e-3 * 20e4 / 2.8
     d = autocorrelation_factor / e
     x = D / d
     f = A * n_squared / beta
@@ -35,20 +35,18 @@ mu = function(A, n_squared, D, e, beta, autocorrelation_factor) {
     }
 }
 
-mu_total = function(spectrum, A, D, autocorrelation_factor) {
+mu_total = function(spectrum, A, D) {
     return(sapply(D, function(D_) {
-        total = spectrum[, mu_e := mu(A, n_squared, D_, energy, beta,
-                                      autocorrelation_factor), by=energy]
+        total = spectrum[, mu_e := mu(A, n_squared, D_, energy, beta), by=energy]
         return(total[, mu_e %*% total_weight])
             }))
 }
 
 perform_fit = function(thickness) {
     fit = nls(
-              mean_R ~ B + mu_total(spectrum(thickness), A, particle_size,
-                                    autocorrelation_factor),
+              mean_R ~ B + mu_total(spectrum(thickness), A, particle_size),
               data=summary[sample_thickness==thickness],
-              start=list(A=1e4, B=2.3, autocorrelation_factor=1.24e-3 * 20e4 / 2.8))
+              start=list(A=1e4, B=2.3))
 
     fit_dt = data.table(summary(fit)$parameters)
     dt = data.table(
@@ -56,8 +54,6 @@ perform_fit = function(thickness) {
         err_A=signif(1000 * fit_dt[1, "Std. Error", with=FALSE][[1]], 2),
         B=signif(fit_dt[2, "Estimate", with=FALSE][[1]], 3),
         err_B=signif(fit_dt[2, "Std. Error", with=FALSE][[1]], 2),
-        autocorr=signif(fit_dt[3, "Estimate", with=FALSE][[1]], 3),
-        err_autocorr=signif(fit_dt[3, "Std. Error", with=FALSE][[1]], 2),
         sample_thickness=thickness
         )
     prediction = data.table(particle_size=seq(0.1, 8, len=100))
@@ -69,7 +65,8 @@ perform_fit = function(thickness) {
 fits = list(perform_fit(12), perform_fit(45))
 prediction = rbindlist(list(fits[[1]]$prediction, fits[[2]]$prediction))
 pars = rbindlist(list(fits[[1]]$fit_pars, fits[[2]]$fit_pars))
-print(pars)
+print(fits)
+
 
 plot = ggplot(summary) + 
     geom_point(aes(x=particle_size, y=mean_R, group=sample_thickness,
