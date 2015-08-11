@@ -15,7 +15,8 @@ from nist_lookup import xraydb_plugin as xdb
               help="thickness of the SiO2 (cm)")
 def calculate_spectrum(spectrum_file, design_energy, talbot_order, thickness):
     spectrum = np.loadtxt(spectrum_file, delimiter=",", skiprows=1)
-    with open("{0}.csv".format(thickness), "w") as output_csv:
+    output_filename = "{0}.csv".format(thickness)
+    with open(output_filename, "w") as output_csv:
         output = csv.writer(output_csv)
         output.writerow(
             ["energy", "photons", "n_squared", "beta", "visibility",
@@ -38,6 +39,8 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order, thickness):
                 np.exp(-0.2 / plastic_atlen) *
                 np.exp(-0.0016 / al_atlen)
             )  # detector window, holders...
+            if energy <= 50 and thickness == 1.2:
+                photons = 0
             total_weight_no_vis = (
                 photons *
                 other_absorption *
