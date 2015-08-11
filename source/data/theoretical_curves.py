@@ -39,8 +39,6 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order, thickness):
                 np.exp(-0.2 / plastic_atlen) *
                 np.exp(-0.0016 / al_atlen)
             )  # detector window, holders...
-            if energy <= 50 and thickness == 1.2:
-                photons = 0
             total_weight_no_vis = (
                 photons *
                 other_absorption *
