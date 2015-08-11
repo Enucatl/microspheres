@@ -21,7 +21,7 @@ mu = function(A, n_squared, D, e, beta) {
     # hc = 1.24e-3 um keV
     # period = 2.8 um
     autocorrelation_factor = 1.24e-3 * 20e4 / 2.8
-    d =  autocorrelation_factor / e
+    d = autocorrelation_factor / e
     x = D / d
     f = A * n_squared / beta
     if (x <= 1) {
@@ -50,7 +50,7 @@ perform_fit = function(thickness) {
 
     fit_dt = data.table(summary(fit)$parameters)
     dt = data.table(
-        A=signif(1000 * fit_dt[1, "Estimate", with=FALSE][[1]], 2),
+        A=signif(1000 * fit_dt[1, "Estimate", with=FALSE][[1]], 3),
         err_A=signif(1000 * fit_dt[1, "Std. Error", with=FALSE][[1]], 2),
         B=signif(fit_dt[2, "Estimate", with=FALSE][[1]], 3),
         err_B=signif(fit_dt[2, "Std. Error", with=FALSE][[1]], 2),
