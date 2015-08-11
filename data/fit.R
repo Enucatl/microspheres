@@ -10,12 +10,12 @@ setkey(summary, "sample_thickness")
 spectrum = function(thickness) {
     if (thickness == 12) {
         dt = fread("../source/data/1.2.csv")
-        norm = 1000 / dt[, sum(total_weight)]
+        norm = 1 / dt[, sum(total_weight)]
         return(dt[, total_weight := norm * total_weight])
     }
     else if (thickness == 45) {
-        dt = fread("../source/data/4.5.csv")
-        norm = 1000 / dt[, sum(total_weight)]
+        dt = fread("../source/data/1.2.csv")
+        norm = 1 / dt[, sum(total_weight)]
         return(dt[, total_weight := norm * total_weight])
     }
 }
@@ -54,8 +54,8 @@ perform_fit = function(thickness) {
 
     fit_dt = data.table(summary(fit)$parameters)
     dt = data.table(
-        A=signif(fit_dt[1, "Estimate", with=FALSE][[1]], 2),
-        err_A=signif(fit_dt[1, "Std. Error", with=FALSE][[1]], 2),
+        A=signif(1e-3 * fit_dt[1, "Estimate", with=FALSE][[1]], 2),
+        err_A=signif(1e-3 * fit_dt[1, "Std. Error", with=FALSE][[1]], 2),
         B=signif(fit_dt[2, "Estimate", with=FALSE][[1]], 3),
         err_B=signif(fit_dt[2, "Std. Error", with=FALSE][[1]], 2),
         sample_thickness=thickness
