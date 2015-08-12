@@ -188,7 +188,7 @@ R = \sum_\mathcal{E} w(\mathcal{E}) R(\mathcal{E})
 The spectral weights \(w(\mathcal{E})\) are computed starting from a
 <a href='http://spekcalc.weebly.com/'>SpekCalc</a>
 simulated spectrum. The result of the simulation can be downloaded as a
-<a href='https://github.com/Enucatl/microspheres/blob/master/source/data/spectra/U210%20-%20160kVp%2045deg%201000Air%200Be%200Al%200Cu%200Sn%200W%200Ta%200Wa.csv'>csv file.</a>
+<a href='https://github.com/Enucatl/microspheres/blob/master/source/data/spectra/U210%20-%20160kVp%2011deg%201000Air%200.8Be%200Al%200Cu%200Sn%200W%200Ta%200Wa.csv'>csv file.</a>
 The spectrum is then attenuated according to the Beer-Lambert law as it goes through the sample and interacts with the detector. This reweighting is performed by
 <a href='https://github.com/Enucatl/microspheres/blob/master/source/data/theoretical_curves.py#L24'>a python script.</a>
 The refractive index \(n\) needed for this reweighting and for the function above is calculated through
@@ -220,7 +220,7 @@ below.
 </p>
 </div>
 <div class='row'>
-<h3>The fit</h3>
+<h3 id='thefit'>The fit</h3>
 <p>
 After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(C\) and \(R_0\) such that:
 \[
