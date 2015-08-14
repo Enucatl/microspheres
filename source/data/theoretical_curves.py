@@ -27,7 +27,7 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order, thickness):
                 np.sin(np.pi / 2 * design_energy / energy)**2 *
                 np.sin(talbot_order * np.pi / 2 * design_energy / energy))
             delta, beta, sio2_atlen = xdb.xray_delta_beta(
-                'SiO2', 1.8, energy * 1e3)
+                'SiO2', 2.65, energy * 1e3)
             delta_air, beta_air, _ = xdb.xray_delta_beta(
                 'N2', 1.27e-3, energy * 1e3)
             _, _, plastic_atlen = xdb.xray_delta_beta(
