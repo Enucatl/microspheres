@@ -54,8 +54,10 @@ $ ->
     axes = new d3.chart.Axes()
         .x_scale scatter.x_scale()
         .y_scale scatter.y_scale()
-        .x_title "diameter (μm)"
-        .y_title "ratio of the logarithms"
+        .x_title "particle diameter (μm)"
+        .y_title "R"
+
+    axes.y_axis().ticks(5)
 
     errorbars = new d3.chart.Errorbar()
         .x_scale scatter.x_scale()
