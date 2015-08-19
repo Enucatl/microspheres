@@ -3,21 +3,27 @@
 library(data.table)
 library(jsonlite)
 library(ggplot2)
+library(argparse)
+
+parser <- ArgumentParser(description='weighted fit')
+parser$add_argument('thin', nargs=1)
+parser$add_argument('thick', nargs=1)
+parser$add_argument('parsoutput', nargs=1)
+parser$add_argument('predoutput', nargs=1)
+args <- parser$parse_args()
 
 summary = data.table(fromJSON("summary.json"))
 setkey(summary, "sample_thickness")
 
 spectrum = function(thickness) {
     if (thickness == 12) {
-        dt = fread("../source/data/1.2.csv")
-        norm = 1000 / dt[, sum(total_weight)]
-        return(dt[, total_weight := norm * total_weight])
+        dt = fread(args$thin)
     }
     else if (thickness == 45) {
-        dt = fread("../source/data/4.5.csv")
-        norm = 1000 / dt[, sum(total_weight)]
-        return(dt[, total_weight := norm * total_weight])
+        dt = fread(args$thick)
     }
+    norm = 1000 / dt[, sum(total_weight)]
+    return(dt[, total_weight := norm * total_weight])
 }
 
 mu = function(A, n_squared, D, e, beta) {
@@ -87,8 +93,8 @@ plot = ggplot(summary) +
          colour="sample thickness (mm)")
 X11(width=14, height=10)
 print(plot)
-write(toJSON(prediction), "fit_prediction.json")
-write(toJSON(pars), "fit_pars.json")
+write(toJSON(pars), args$parsoutput)
+write(toJSON(prediction), args$predoutput)
 
 
 #warnings()

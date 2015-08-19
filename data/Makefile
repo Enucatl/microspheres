@@ -1,15 +1,20 @@
 .PHONY: all
 
-all: summary.json fit_prediction.json fit_pars.json
+VPATH = ../source/data/rawdata:../source/data/theory
 
-fit_pars.json: fit.R ../source/data/1.2.csv ../source/data/4.5.csv
-	./$<
+all: summary.json fit_pars_full_spectrum.json fit_pars_hard_spectrum.json
 
-fit_prediction.json: fit.R ../source/data/1.2.csv ../source/data/4.5.csv
-	./$<
+fit_pars_full_spectrum.json: fit.R 12-full-spectrum.csv 45-full-spectrum.csv
+	make -C ../source/data/rawdata
+	make -C ../source/data/theory
+	./$^ $@ $(subst pars,prediction,$@)
 
-summary.json: build_summary.R ../source/data/*.csv
+fit_pars_hard_spectrum.json: fit.R 12-hard-spectrum.csv 45-hard-spectrum.csv
+	make -C ../source/data/rawdata
+	make -C ../source/data/theory
+	./$^ $@ $(subst pars,prediction,$@)
+
+summary.json: build_summary.R ../source/data/rawdata/*.csv
+	make -C ../source/data/rawdata
+	make -C ../source/data/theory
 	./$< > $@
-
-%.csv: %.hdf5 ../source/data/Makefile
-	make -C ../source/data `basename $@`

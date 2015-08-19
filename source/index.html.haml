@@ -4,7 +4,7 @@
     %h1 Silica microspheres
     %h3 0.16 to 7.75 &micro;m
     .row
-      .col-md-6.col-md-offset-3#summary-plot{data: { exp: data.summary.to_json, theo: data.fit_prediction.to_json}}
+      .col-md-6.col-md-offset-3#summary-plot{data: { exp: data.summary.to_json, theo: data.fit_prediction_full_spectrum.to_json}}
     %br/
     %a.btn.btn-dark.btn-lg{:href => "#experiment"} what's this plot about?
 
@@ -103,9 +103,9 @@
             The spectral weights \(w(\mathcal{E})\) are computed starting from a
             %a{href: "http://spekcalc.weebly.com/"} SpekCalc
             simulated spectrum. The result of the simulation can be downloaded as a
-            %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/spectra/U210%20-%20160kVp%2011deg%201000Air%200.8Be%200Al%200Cu%200Sn%200W%200Ta%200Wa.csv"} csv file.
+            %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv"} csv file.
             The spectrum is then attenuated according to the Beer-Lambert law as it goes through the sample and interacts with the detector. This reweighting is performed by
-            %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/theoretical_curves.py#L24"} a python script.
+            %a{href: "https://github.com/Enucatl/microspheres/blob/master/source/data/theory/theoretical_curves.py#L24"} a python script.
             The refractive index \(n\) needed for this reweighting and for the function above is calculated through
             %a{href: "https://bitbucket.org/psitomcat/nist_lookup"} this library.
 
@@ -156,7 +156,7 @@
                     %th.text-center \(R_0\)
                     %th.text-center \(C (\times 10^{-3})\)
                 %tbody
-                  -data.fit_pars.each do |row|
+                  -data.fit_pars_full_spectrum.each do |row|
                     %tr
                       %td
                         =row.sample_thickness
@@ -214,24 +214,24 @@
             visibility, detector efficiency and the photons transmitted by the
             sample. Only this last factor depends on the sample thickness.
         .row
-          .col-md-6.col-xs-12.theoretical-histogram#photons-12{data: {src: "data/1.2.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram#photons-12{data: {src: "data/theory/12-full-spectrum.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
             %h3 source spectrum (normalized to integral = 1)
-          .col-md-6.col-xs-12.theoretical-histogram#n_squared-12{data: {src: "data/1.2.csv", var: "n_squared", ytitle: "|n|² / 1 (keV)", logarithmic: true}}
+          .col-md-6.col-xs-12.theoretical-histogram#n_squared-12{data: {src: "data/theory/12-full-spectrum.csv", var: "n_squared", ytitle: "|n|² / 1 (keV)", logarithmic: true}}
             %h3 refractive index of silica
         .row
-          .col-md-6.col-xs-12.theoretical-histogram#visibility-12{data: {src: "data/1.2.csv", var: "visibility", ytitle: "visibility / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram#visibility-12{data: {src: "data/theory/12-full-spectrum.csv", var: "visibility", ytitle: "visibility / 1 (keV)", normalize: true}}
             %h3 theoretical visibility
-          .col-md-6.col-xs-12.theoretical-histogram#detector-efficiency-12{data: {src: "data/1.2.csv", var: "detector_efficiency", ytitle: "detector efficiency / 1 (keV)"}}
+          .col-md-6.col-xs-12.theoretical-histogram#detector-efficiency-12{data: {src: "data/theory/12-full-spectrum.csv", var: "detector_efficiency", ytitle: "detector efficiency / 1 (keV)"}}
             %h3 detector efficiency
         .row
-          .col-md-6.col-xs-12.theoretical-histogram#absorbed-12{data: {src: "data/1.2.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram#absorbed-12{data: {src: "data/theory/12-full-spectrum.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
             %h3 transmission through 12 mm SiO₂
-          .col-md-6.col-xs-12.theoretical-histogram#absorbed-45{data: {src: "data/4.5.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram#absorbed-45{data: {src: "data/theory/45-full-spectrum.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
             %h3 transmission through 45 mm SiO₂
         .row
-          .col-md-6.col-xs-12.theoretical-histogram#total-12{data: {src: "data/1.2.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram#total-12{data: {src: "data/theory/12-full-spectrum.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
             %h3 total weight \(w(\mathcal{E})\), 12 mm
-          .col-md-6.col-xs-12.theoretical-histogram#total-45{data: {src: "data/4.5.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram#total-45{data: {src: "data/theory/45-full-spectrum.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
             %h3 total weight \(w(\mathcal{E})\), 45 mm
 
 
