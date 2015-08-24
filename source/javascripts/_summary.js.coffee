@@ -18,9 +18,10 @@ $ ->
             .height height
             .x_value (d) -> d.particle_size
             .y_value (d) -> d.mean_R
+            .radius 6
             .color_value (d) -> d.sample_thickness
             .margin {
-                bottom: 50
+                bottom: 100
                 left: 50
                 top: 50
                 right: 50
@@ -44,12 +45,7 @@ $ ->
             .color_scale scatter.color_scale()
             .x_scale scatter.x_scale()
             .y_scale scatter.y_scale()
-            .margin {
-                bottom: 50
-                left: 50
-                top: 50
-                right: 50
-            }
+            .margin scatter.margin()
 
         axes = new d3.chart.Axes()
             .x_scale scatter.x_scale()
@@ -82,7 +78,7 @@ $ ->
 
         legend = new d3.chart.CircleLegend()
             .color_scale scatter.color_scale()
-            .width width
+            .radius scatter.radius()
             .text_value (d) -> "sample thickness #{d} mm"
 
         d3.select placeholder

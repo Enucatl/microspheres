@@ -17,10 +17,11 @@ $ ->
         scatter = new d3.chart.Scatter()
             .width width
             .height height
+            .radius 5
             .x_value (d) -> d[1]
             .y_value (d) -> d[2]
             .margin {
-                bottom: 50
+                bottom: 100
                 left: 50
                 top: 50
                 right: 50
@@ -36,10 +37,11 @@ $ ->
             .y_title "R"
 
         axes.y_axis().ticks(5)
+        axes.x_axis().ticks(5)
 
         legend = new d3.chart.CircleLegend()
             .color_scale scatter.color_scale()
-            .width width
+            .radius scatter.radius()
             .text_value (d) -> d.toLowerCase()
 
         d3.select placeholder
@@ -52,4 +54,3 @@ $ ->
             .datum 1
             .call axes.draw
             .call legend.draw
-

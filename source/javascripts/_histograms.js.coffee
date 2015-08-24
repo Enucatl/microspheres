@@ -17,8 +17,8 @@ $ ->
                         .width width
                         .height height
                         .margin {
-                            bottom: 50
-                            left: 50
+                            bottom: 100
+                            left: 100
                             top: 50
                             right: 50
                             }
@@ -42,6 +42,9 @@ $ ->
                         .y_scale histogram.y_scale()
                         .x_title color_value
                         .y_title "#pixels"
+
+                    histogram_axes.y_axis().ticks(4)
+                    histogram_axes.x_axis().ticks(5)
 
                     d3.select placeholder
                         .datum histogram_data

@@ -29,8 +29,8 @@ $ ->
                     .x_value (d) -> d.energy
                     .y_value (d) -> d.value
                     .margin {
-                        bottom: 50
-                        left: 50
+                        bottom: 100
+                        left: 100
                         top: 50
                         right: 50
                     }
@@ -56,6 +56,8 @@ $ ->
                     .y_scale histogram.y_scale()
                     .x_title "energy (keV)"
                     .y_title y_title
+
+                axes.y_axis().ticks(4)
 
                 d3.select placeholder
                     .datum data

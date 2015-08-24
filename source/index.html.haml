@@ -4,7 +4,7 @@
     %h1 Silica microspheres
     %h3 0.16 to 7.75 &micro;m
     .row
-      .col-md-6.col-md-offset-3.col-xs-12#summary-plot{data: { exp: data.summary.to_json, theo: data.fit_prediction_full_spectrum.to_json}}
+      .col-md-6.col-md-offset-3.col-xs-12.svg#summary-plot{data: { exp: data.summary.to_json, theo: data.fit_prediction_full_spectrum.to_json}}
     %br/
     %a.btn.btn-dark.btn-lg{:href => "#experiment"} what's this plot about?
 
@@ -182,7 +182,7 @@
             one understanding of the dark-field signal.
 
         .row
-          .col-md-offset-2.col-md-8.col-xs-12#aggregated
+          .col-md-offset-2.col-md-8.col-xs-12.svg#aggregated
 
         .row
           %h3 Conclusions
@@ -208,7 +208,7 @@
         .row
           %h3 Without photons with energy less than 50 keV
           .row
-            .col-md-8.col-md-offset-2.col-xs-12#summary-plot-hard-spectrum{data: { exp: data.summary.to_json, theo: data.fit_prediction_hard_spectrum.to_json}}
+            .col-md-8.col-md-offset-2.col-xs-12.svg#summary-plot-hard-spectrum{data: { exp: data.summary.to_json, theo: data.fit_prediction_hard_spectrum.to_json}}
 
           .row
             .col-md-offset-3.col-md-6.col-xs-12
@@ -241,24 +241,24 @@
             visibility, detector efficiency and the photons transmitted by the
             sample. Only this last factor depends on the sample thickness.
         .row
-          .col-md-6.col-xs-12.theoretical-histogram#photons-12{data: {src: "data/theory/12-full-spectrum.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram.svg#photons-12{data: {src: "data/theory/12-full-spectrum.csv", var: "photons", ytitle: "#photons / 1 (keV)", normalize: true}}
             %h3 source spectrum (normalized to integral = 1)
-          .col-md-6.col-xs-12.theoretical-histogram#n_squared-12{data: {src: "data/theory/12-full-spectrum.csv", var: "n_squared", ytitle: "|n|² / 1 (keV)", logarithmic: true}}
+          .col-md-6.col-xs-12.theoretical-histogram.svg#n_squared-12{data: {src: "data/theory/12-full-spectrum.csv", var: "n_squared", ytitle: "|n|² / 1 (keV)", logarithmic: true}}
             %h3 refractive index of silica
         .row
-          .col-md-6.col-xs-12.theoretical-histogram#visibility-12{data: {src: "data/theory/12-full-spectrum.csv", var: "visibility", ytitle: "visibility / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram.svg#visibility-12{data: {src: "data/theory/12-full-spectrum.csv", var: "visibility", ytitle: "visibility / 1 (keV)", normalize: true}}
             %h3 theoretical visibility
-          .col-md-6.col-xs-12.theoretical-histogram#detector-efficiency-12{data: {src: "data/theory/12-full-spectrum.csv", var: "detector_efficiency", ytitle: "detector efficiency / 1 (keV)"}}
+          .col-md-6.col-xs-12.theoretical-histogram.svg#detector-efficiency-12{data: {src: "data/theory/12-full-spectrum.csv", var: "detector_efficiency", ytitle: "detector efficiency / 1 (keV)"}}
             %h3 detector efficiency
         .row
-          .col-md-6.col-xs-12.theoretical-histogram#absorbed-12{data: {src: "data/theory/12-full-spectrum.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram.svg#absorbed-12{data: {src: "data/theory/12-full-spectrum.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
             %h3 transmission through 12 mm SiO₂
-          .col-md-6.col-xs-12.theoretical-histogram#absorbed-45{data: {src: "data/theory/45-full-spectrum.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram.svg#absorbed-45{data: {src: "data/theory/45-full-spectrum.csv", var: "absorbed_in_sample", ytitle: "sample transmission / 1 (keV)", normalize: true}}
             %h3 transmission through 45 mm SiO₂
         .row
-          .col-md-6.col-xs-12.theoretical-histogram#total-12{data: {src: "data/theory/12-full-spectrum.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram.svg#total-12{data: {src: "data/theory/12-full-spectrum.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
             %h3 total weight \(w(\mathcal{E})\), 12 mm
-          .col-md-6.col-xs-12.theoretical-histogram#total-45{data: {src: "data/theory/45-full-spectrum.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
+          .col-md-6.col-xs-12.theoretical-histogram.svg#total-45{data: {src: "data/theory/45-full-spectrum.csv", var: "total_weight", ytitle: "total weight / 1 (keV)", normalize: true}}
             %h3 total weight \(w(\mathcal{E})\), 45 mm
 
 
@@ -327,17 +327,17 @@
         .row
           .col-md-6
             %h3 absorption
-            .portfolio-item#absorption-histogram
+            .portfolio-item.svg#absorption-histogram
           .col-md-6
             %h3 dark field
-            .portfolio-item#darkfield-histogram
+            .portfolio-item.svg#darkfield-histogram
         .row
           .col-md-6
             %h3 ratio of the logarithms
-            .portfolio-item#ratio-histogram
+            .portfolio-item.svg#ratio-histogram
           .col-md-6
             %h3 visibility
-            .portfolio-item#visibility-histogram
+            .portfolio-item.svg#visibility-histogram
 
 %section#dataset-images.portfolio.bg-primary
   .container

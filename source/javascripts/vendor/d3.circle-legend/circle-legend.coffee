@@ -60,6 +60,7 @@ class d3.chart.CircleLegend extends d3.chart.BaseChart
             texts
                 .enter()
                 .append "text"
+                .classed "legend", true
                 .attr "x", width - 1.2 * legend_circle_width
                 .attr "y", 0.5 * legend_element_height
                 .attr "dy", 0.25 * legend_element_height
