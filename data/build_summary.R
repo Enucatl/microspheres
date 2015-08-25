@@ -96,3 +96,4 @@ summary12 = summary[sample_thickness==12]
 summary45 = summary[sample_thickness==45]
 write(toJSON(summary12), "summary12.json")
 write(toJSON(summary45), "summary45.json")
+write(toJSON(summary), "summary.json")
