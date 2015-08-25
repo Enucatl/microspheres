@@ -90,6 +90,9 @@ summary = datasets[, `:=`(
       mean_R=fread(file)[,mean(R)],
       sd_R=fread(file)[,sd(R)]), by=file
     ]
-summary = summary[,file := gsub("../source/", "", file)]
+summary = summary[, file := gsub("../source/", "", file)]
 
-print(toJSON(summary))
+summary12 = summary[sample_thickness==12]
+summary45 = summary[sample_thickness==45]
+write(toJSON(summary12), "summary12.json")
+write(toJSON(summary45), "summary45.json")
