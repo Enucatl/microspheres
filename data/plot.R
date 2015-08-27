@@ -14,6 +14,7 @@ theme_set(theme_bw(base_size=12) + theme(
     axis.title.x=element_text(vjust=0.1),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
+    legend.key = element_blank(),
     panel.border = element_blank()
 ))
 
