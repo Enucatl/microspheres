@@ -87,4 +87,4 @@ end
 
 ignore "**/LICENSE"
 ignore "**/README.md"
-ignore "data/rawdata/*"
+ignore "data/rawdata/*.hdf5"
