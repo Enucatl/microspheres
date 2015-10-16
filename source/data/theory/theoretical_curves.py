@@ -55,7 +55,7 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order,
                 additional_filter_material,
                 additional_filter_density,
                 energy * 1e3)
-            other_absorption *= np.exp(
+            photons *= np.exp(
                 -additional_filter_thickness / filter_atlen)
         total_weight_no_vis = (
             photons *
