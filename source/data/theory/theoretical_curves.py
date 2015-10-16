@@ -13,10 +13,18 @@ from nist_lookup import xraydb_plugin as xdb
               help="talbot order")
 @click.option("--thickness", type=float, default=1.2,
               help="thickness of the SiO2 (cm)")
+@click.option("--additional_filter_material",
+              help="additional filter for the source")
+@click.option("--additional_filter_density", type=float,
+              help="density of the additional filter (g/cm^3)")
+@click.option("--additional_filter_thickness", type=float,
+              help="thickness of the additional filter (cm)")
 @click.option("--output", "-o", type=click.File("w"),
               help="output csv file name")
 def calculate_spectrum(spectrum_file, design_energy, talbot_order,
-                       thickness, output):
+                       thickness, additional_filter_material,
+                       additional_filter_density,
+                       additional_filter_thickness, output):
     spectrum = np.loadtxt(spectrum_file, delimiter=",", skiprows=1)
     output_csv = csv.writer(output)
     output_csv.writerow(
@@ -42,6 +50,13 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order,
             np.exp(-0.2 / plastic_atlen) *
             np.exp(-0.0016 / al_atlen)
         )  # detector window, holders...
+        if additional_filter_material:
+            _, _, filter_atlen = xdb.xray_delta_beta(
+                additional_filter_material,
+                additional_filter_density,
+                energy * 1e3)
+            other_absorption *= np.exp(
+                -additional_filter_thickness / filter_atlen)
         total_weight_no_vis = (
             photons *
             other_absorption *
