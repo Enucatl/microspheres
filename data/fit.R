@@ -12,6 +12,7 @@ parser$add_argument('summary', nargs=1)
 parser$add_argument('output', nargs=1)
 args <- parser$parse_args()
 
+
 perform_fit = function(spectrum, summary) {
     return(nls(
               mean_R ~ B + mu_total(spectrum, A, particle_size),
@@ -21,6 +22,7 @@ perform_fit = function(spectrum, summary) {
 }
 
 summary = data.table(fromJSON(args$summary))
+print(summary)
 spectrum = fread(args$spectrum)
 norm = 1000 / spectrum[, sum(total_weight)]
 spectrum = spectrum[, total_weight := norm * total_weight]

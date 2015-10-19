@@ -25,7 +25,8 @@ files = c(
     "../source/data/rawdata/S00359_S00378.csv",
     "../source/data/rawdata/S00379_S00398.csv",
     "../source/data/rawdata/S00401_S00420.csv",
-    "../source/data/rawdata/S00421_S00440.csv"
+    "../source/data/rawdata/S00421_S00440.csv",
+    "../source/data/rawdata/S00016_S00035.csv"
     )
 sizes = c(
     0.166,
@@ -49,7 +50,8 @@ sizes = c(
     3.62,
     3.62,
     7.75,
-    7.75
+    7.75,
+    0.166
     ) #um
 thicknesses = c(
     45,
@@ -73,13 +75,40 @@ thicknesses = c(
     12,
     45,
     12,
-    45
+    45,
+    12
     ) #mm
+filters = c(
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "None",
+    "Fe 0.1"
+    )  # mm
 
 datasets = data.table(
     file=files,
     particle_size=sizes,
-    sample_thickness=thicknesses)
+    sample_thickness=thicknesses,
+    filter=filters)
 setkey(datasets, file)
 
 summary = datasets[, `:=`(
@@ -92,8 +121,8 @@ summary = datasets[, `:=`(
     ]
 summary = summary[, file := gsub("../source/", "", file)]
 
-summary12 = summary[sample_thickness==12]
-summary45 = summary[sample_thickness==45]
+summary12 = summary[sample_thickness==12 & filter=="None"]
+summary45 = summary[sample_thickness==45 & filter=="None"]
 write(toJSON(summary12), "summary12.json")
 write(toJSON(summary45), "summary45.json")
 write(toJSON(summary), "summary.json")
