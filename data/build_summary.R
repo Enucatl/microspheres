@@ -26,7 +26,10 @@ files = c(
     "../source/data/rawdata/S00379_S00398.csv",
     "../source/data/rawdata/S00401_S00420.csv",
     "../source/data/rawdata/S00421_S00440.csv",
-    "../source/data/rawdata/S00016_S00035.csv"
+    "../source/data/rawdata/S00016_S00035.csv",
+    "../source/data/rawdata/S00038_S00057.csv",
+    "../source/data/rawdata/S00059_S00078.csv",
+    "../source/data/rawdata/S00080_S00099.csv"
     )
 sizes = c(
     0.166,
@@ -51,7 +54,10 @@ sizes = c(
     3.62,
     7.75,
     7.75,
-    0.166
+    0.166,
+    0.166,
+    0.261,
+    0.507
     ) #um
 thicknesses = c(
     45,
@@ -76,6 +82,9 @@ thicknesses = c(
     45,
     12,
     45,
+    12,
+    12,
+    12,
     12
     ) #mm
 filters = c(
@@ -101,7 +110,10 @@ filters = c(
     "None",
     "None",
     "None",
-    "Fe 0.1"
+    "Fe 0.1",
+    "Cu 1",
+    "Cu 1",
+    "Cu 1"
     )  # mm
 
 datasets = data.table(
