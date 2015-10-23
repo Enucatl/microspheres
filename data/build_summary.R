@@ -29,7 +29,14 @@ files = c(
     "../source/data/rawdata/S00016_S00035.csv",
     "../source/data/rawdata/S00038_S00057.csv",
     "../source/data/rawdata/S00059_S00078.csv",
-    "../source/data/rawdata/S00080_S00099.csv"
+    "../source/data/rawdata/S00080_S00099.csv",
+    "../source/data/rawdata/S00101_S00120.csv",
+    "../source/data/rawdata/S00122_S00141.csv",
+    "../source/data/rawdata/S00164_S00183.csv",
+    "../source/data/rawdata/S00206_S00225.csv",
+    "../source/data/rawdata/S00227_S00246.csv",
+    "../source/data/rawdata/S00248_S00267.csv",
+    "../source/data/rawdata/S00185_S00204.csv"
     )
 sizes = c(
     0.166,
@@ -57,7 +64,14 @@ sizes = c(
     0.166,
     0.166,
     0.261,
-    0.507
+    0.507,
+    0.690,
+    0.890,
+    1.54,
+    1.70,
+    1.86,
+    3.62,
+    1.18
     ) #um
 thicknesses = c(
     45,
@@ -82,6 +96,13 @@ thicknesses = c(
     45,
     12,
     45,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
     12,
     12,
     12,
@@ -111,6 +132,13 @@ filters = c(
     "None",
     "None",
     "Fe 0.1",
+    "Cu 1",
+    "Cu 1",
+    "Cu 1",
+    "Cu 1",
+    "Cu 1",
+    "Cu 1",
+    "Cu 1",
     "Cu 1",
     "Cu 1",
     "Cu 1"

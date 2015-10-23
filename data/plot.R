@@ -38,8 +38,8 @@ plot = ggplot(summary, aes(colour=factor(sample_thickness))) +
          y="R",
          colour="thickness (mm)")
 
-X11(width=14, height=10)
-print(plot)
+#X11(width=14, height=10)
+#print(plot)
 #warnings()
 width = 7
 factor = 0.618
