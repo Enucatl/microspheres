@@ -4,12 +4,13 @@ library(data.table)
 library(jsonlite)
 library(ggplot2)
 library(argparse)
-source("model.R")
+source("data/model.R")
 
 parser <- ArgumentParser(description='weighted fit')
 parser$add_argument('spectrum', nargs=1)
 parser$add_argument('summary', nargs=1)
 parser$add_argument('output', nargs=1)
+parser$add_argument('--filter', nargs=1)
 args <- parser$parse_args()
 
 
@@ -22,8 +23,11 @@ perform_fit = function(spectrum, summary) {
 }
 
 summary = data.table(fromJSON(args$summary))
-print(summary)
 spectrum = fread(args$spectrum)
+filter = args$filter
+if (!is.null(filter)) {
+    summary = summary[eval(parse(text=filter))]
+}
 norm = 1000 / spectrum[, sum(total_weight)]
 spectrum = spectrum[, total_weight := norm * total_weight]
 fit = perform_fit(spectrum, summary)

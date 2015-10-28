@@ -3,7 +3,9 @@ require "csv"
 datasets = CSV.table "source/data/datasets.csv"
 summary = []
 
+
 namespace :reconstruction do
+
   def raw_from_reconstructed filename
     dirname = File.dirname filename
     basename = File.basename filename, ".*"
@@ -67,10 +69,76 @@ namespace :summary do
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
-  task :default => "data/summary.json"
+  task :all => "data/summary.json"
 
 end
 
 
 namespace :fit do
+
+  file "data/fit12_full_spectrum.rds" => [
+    "data/fit.R",
+    "source/data/theory/12-full-spectrum.csv",
+    "data/summary.json",
+    "data/model.R"
+  ] do |f|
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.prerequisites[2]} #{f.name} --filter 'sample_thickness == 12 & filter == \"None\"'"
+  end
+
+  file "data/fit45_full_spectrum.rds" => [
+    "data/fit.R",
+    "source/data/theory/45-full-spectrum.csv",
+    "data/summary.json",
+    "data/model.R"
+  ] do |f|
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.prerequisites[2]} #{f.name} --filter 'sample_thickness == 45 & filter == \"None\"'"
+  end
+
+  file "data/fit12_Cu1mm.rds" => [
+    "data/fit.R",
+    "source/data/theory/12-copper.csv",
+    "data/summary.json",
+    "data/model.R"
+  ] do |f|
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.prerequisites[2]} #{f.name} --filter 'sample_thickness == 12 & filter == \"Cu 1 mm\"'"
+  end
+
+  file "data/fit_prediction.json" do |f|
+  end
+
+  task :fit => ["data/fit12_full_spectrum.rds", "data/fit45_full_spectrum.rds", "data/fit12_Cu1mm.rds"]
+  task :print => ["data/fit12_full_spectrum.rds", "data/fit45_full_spectrum.rds", "data/fit12_Cu1mm.rds"]
+
+end
+
+
+namespace :theory do
+
+  task :all => [
+    "source/data/theory/12-full-spectrum.csv",
+    "source/data/theory/45-full-spectrum.csv",
+    "source/data/theory/12-copper.csv",
+  ]
+
+  file "source/data/theory/12-full-spectrum.csv" => [
+    "source/data/theory/theoretical_curves.py",
+    "source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv",
+  ] do |f|
+    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 12 --output #{f.name}"
+  end
+
+  file "source/data/theory/45-full-spectrum.csv" => [
+    "source/data/theory/theoretical_curves.py",
+    "source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv",
+  ] do |f|
+    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 45 --output #{f.name}"
+  end
+
+  file "source/data/theory/12-copper.csv" => [
+    "source/data/theory/theoretical_curves.py",
+    "source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv",
+  ] do |f|
+    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 12 --additional_filter_material Cu --additional_filter_density 8.92 --additional_filter_thickness 0.1 --output #{f.name}"
+  end
+
 end

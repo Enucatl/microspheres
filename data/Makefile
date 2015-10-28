@@ -36,15 +36,3 @@ summary45.json: build_summary.R ../source/data/rawdata/*.csv
 	make -C ../source/data/rawdata
 	make -C ../source/data/theory
 	./$<
-
-fit12_full_spectrum.rds: fit.R 12-full-spectrum.csv summary12.json 
-	./$^ $@
-
-fit45_full_spectrum.rds: fit.R 45-full-spectrum.csv summary45.json 
-	./$^ $@
-
-fit12_hard_spectrum.rds: fit.R 12-hard-spectrum.csv summary12.json 
-	./$^ $@
-
-fit45_hard_spectrum.rds: fit.R 45-hard-spectrum.csv summary45.json 
-	./$^ $@
