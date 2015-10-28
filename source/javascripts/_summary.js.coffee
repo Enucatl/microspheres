@@ -15,7 +15,8 @@ $ ->
 
         color_value = (d) ->
             text = "sample thickness #{d.sample_thickness} mm"
-            text += ", source filter #{d.filter}" if d.filter
+            text += ", source filter #{d.filter}" if d.filter and d.filter != "None"
+            console.log text
             return text
 
         scatter = new d3.chart.Scatter()
@@ -23,8 +24,8 @@ $ ->
             .height height
             .x_value (d) -> d.particle_size
             .y_value (d) -> d.mean_R
-            .radius 6
             .color_value color_value
+            .radius 6
             .margin {
                 bottom: 100
                 left: 50
@@ -72,10 +73,6 @@ $ ->
             .call scatter.draw
 
         d3.select placeholder
-            .datum prediction
-            .call line.draw
-
-        d3.select placeholder
             .select "svg"
             .select "g"
             .datum data
@@ -93,6 +90,10 @@ $ ->
             .call axes.draw
             .call legend.draw
 
+        d3.select placeholder
+            .datum prediction
+            .call line.draw
+
         # redraw circles on top of errorbars
         # http://stackoverflow.com/a/26277417
         d3.select placeholder
@@ -105,8 +106,6 @@ $ ->
             .select "g"
             .append "use"
             .attr "xlink:href", "#circles-#{placeholder.substring(1)}"
-
-        console.log scatter.color_scale().domain()
 
     draw_summary "#summary-plot"
     draw_summary "#summary-plot-hard-spectrum"
