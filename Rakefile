@@ -1,6 +1,7 @@
 require "csv"
 
 datasets = CSV.table "source/data/datasets.csv"
+summary = []
 
 namespace :reconstruction do
   def raw_from_reconstructed filename
@@ -18,11 +19,15 @@ namespace :reconstruction do
     File.join "source", "data", "rawdata", basename
   end
 
+  def csv_from_reconstructed filename
+    link_from_reconstructed(filename).ext("csv")
+  end
+
   datasets.each do |row|
     reconstructed = row[:reconstructed]
     link = link_from_reconstructed reconstructed
     raw = raw_from_reconstructed reconstructed
-    csv = link.ext "csv"
+    csv = csv_from_reconstructed reconstructed
     min_pixel = row[:min_pixel]
     max_pixel = row[:max_pixel]
 
@@ -37,13 +42,28 @@ namespace :reconstruction do
     end
 
     file csv => [link, "source/data/rawdata/hdf2csv.py"] do |f|
-      Dir.chdir "source/data/rawdata" do
-        sh "python #{f.prerequisites.second} #{f.prerequisites.first} --crop #{min_pixel} #{max_pixel}"
-      end
+      sh "python #{f.prerequisites[1]} #{f.prerequisites[0]} --crop #{min_pixel} #{max_pixel}"
     end
-
   end
+
 end
 
-task :default => datasets[:reconstructed] do
+
+namespace :summary do
+
+  file "data/build_summary.csv" => datasets[:reconstructed].map {|reconstructed| csv_from_reconstructed(reconstructed)} do |f|
+    datasets.each do |row|
+      row[:csv] = csv_from_reconstructed(row[:reconstructed])
+      summary << row
+    end
+    CSV.open(f.name, "w", write_headers: true, headers: datasets.headers) do |csv|
+      summary.each do |row|
+        csv.puts row
+      end
+    end
+  end
+
+  file "data/summary.json" => ["data/build_summary.R", "data/build_summary.csv"] do |f|
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+  end
 end
