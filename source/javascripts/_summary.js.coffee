@@ -13,13 +13,18 @@ $ ->
             values: prediction.filter (d) -> d.sample_thickness == 45
         }]
 
+        color_value = (d) ->
+            text = "sample thickness #{d.sample_thickness} mm"
+            text += ", source filter #{d.filter}" if d.filter
+            return text
+
         scatter = new d3.chart.Scatter()
             .width width
             .height height
             .x_value (d) -> d.particle_size
             .y_value (d) -> d.mean_R
             .radius 6
-            .color_value (d) -> d.sample_thickness
+            .color_value color_value
             .margin {
                 bottom: 100
                 left: 50
@@ -79,7 +84,7 @@ $ ->
         legend = new d3.chart.CircleLegend()
             .color_scale scatter.color_scale()
             .radius scatter.radius()
-            .text_value (d) -> "sample thickness #{d} mm"
+            .text_value (d) -> d
 
         d3.select placeholder
             .select "svg"
@@ -100,6 +105,8 @@ $ ->
             .select "g"
             .append "use"
             .attr "xlink:href", "#circles-#{placeholder.substring(1)}"
+
+        console.log scatter.color_scale().domain()
 
     draw_summary "#summary-plot"
     draw_summary "#summary-plot-hard-spectrum"

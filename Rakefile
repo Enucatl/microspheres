@@ -66,4 +66,11 @@ namespace :summary do
   file "data/summary.json" => ["data/build_summary.R", "data/build_summary.csv"] do |f|
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
+
+  task :default => "data/summary.json"
+
+end
+
+
+namespace :fit do
 end
