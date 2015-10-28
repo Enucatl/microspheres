@@ -16,7 +16,6 @@ $ ->
         color_value = (d) ->
             text = "sample thickness #{d.sample_thickness} mm"
             text += ", source filter #{d.filter}" if d.filter and d.filter != "None"
-            console.log text
             return text
 
         scatter = new d3.chart.Scatter()
