@@ -94,10 +94,19 @@ namespace :fit do
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
+  file "data/fit_pars.json" => [
+    "data/print_pars.R",
+    "data/fit.rds",
+    "data/model.R",
+  ] do |f|
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+  end
+
   file "data/fit.rds" => "theory:all"
   task :fit => "data/fit.rds"
-  task :print => "data/fit.rds"
+  task :pars => "data/fit_pars.json"
   task :prediction => "data/fit_prediction.json"
+  task :all => [:fit, :pars, :prediction]
 
 end
 
