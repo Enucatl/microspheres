@@ -94,8 +94,9 @@ namespace :fit do
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
+  file "data/fit.rds" => "theory:all"
   task :fit => "data/fit.rds"
-  task :print => ["data/fit12_full_spectrum.rds", "data/fit45_full_spectrum.rds", "data/fit12_Cu1mm.rds"]
+  task :print => "data/fit.rds"
   task :prediction => "data/fit_prediction.json"
 
 end
@@ -113,21 +114,21 @@ namespace :theory do
     "source/data/theory/theoretical_curves.py",
     "source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv",
   ] do |f|
-    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 12 --output #{f.name}"
+    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 1.2 --output #{f.name}"
   end
 
   file "source/data/theory/45-full-spectrum.csv" => [
     "source/data/theory/theoretical_curves.py",
     "source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv",
   ] do |f|
-    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 45 --output #{f.name}"
+    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 4.5 --output #{f.name}"
   end
 
   file "source/data/theory/12-copper.csv" => [
     "source/data/theory/theoretical_curves.py",
     "source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv",
   ] do |f|
-    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 12 --additional_filter_material Cu --additional_filter_density 8.92 --additional_filter_thickness 0.1 --output #{f.name}"
+    sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 1.2 --additional_filter_material Cu --additional_filter_density 8.92 --additional_filter_thickness 0.1 --output #{f.name}"
   end
 
 end
