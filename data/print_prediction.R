@@ -5,16 +5,21 @@ library(jsonlite)
 library(argparse)
 source("data/model.R")
 
-parser <- ArgumentParser(description='print fit prediciton')
-parser$add_argument('output', nargs=1)
+parser <- ArgumentParser(description='print fit prediction')
 parser$add_argument('fit', nargs='+')
+parser$add_argument('output', nargs=1)
 args <- parser$parse_args()
 
-fits = lapply(args$fit, function(filename) {
-    fit <- readRDS(filename)
+predict_dt = function(fit) {
     prediction = data.table(particle_size=seq(0.1, 8, len=100))
-    prediction$mean_R = predict(fit, prediction)
+    prediction$mean_R = predict(fit[[1]], prediction)
     return(prediction)
-})
+}
 
-write(toJSON(rbindlist(fits)), args$output)
+fits = readRDS(args$fit)
+prediction = fits[
+    , .(
+    mean_R=predict_dt(fit)[, mean_R],
+    particle_size=predict_dt(fit)[, particle_size]
+    ), by=description]
+write(toJSON(prediction), args$output)

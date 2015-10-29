@@ -4,7 +4,7 @@
     %h1 Silica microspheres
     %h3 0.16 to 7.75 &micro;m
     .row
-      .col-md-6.col-md-offset-3.col-xs-12.svg#summary-plot{data: { exp: data.summary.to_json, theo: data.fit_prediction_full_spectrum.to_json}}
+      .col-md-6.col-md-offset-3.col-xs-12.svg#summary-plot{data: { exp: data.summary.to_json, theo: data.fit_prediction.to_json}}
     %br/
     %a.btn.btn-dark.btn-lg{:href => "#experiment"} what's this plot about?
 
@@ -206,33 +206,6 @@
                 traditional absorption radiography.
 
         .row
-          %h3 Without photons with energy less than 50 keV
-          .row
-            .col-md-8.col-md-offset-2.col-xs-12.svg#summary-plot-hard-spectrum{data: { exp: data.summary.to_json, theo: data.fit_prediction_hard_spectrum.to_json}}
-
-          .row
-            .col-md-offset-3.col-md-6.col-xs-12
-              %table.table.text-center
-                %thead
-                  %tr
-                    %th.text-center sample thickness (mm)
-                    %th.text-center \(R_0\)
-                    %th.text-center \(C (\times 10^{-3})\)
-                %tbody
-                  -data.fit_pars_hard_spectrum.each do |row|
-                    %tr
-                      %td
-                        =row.sample_thickness
-                      %td
-                        =row.B
-                        &pm;
-                        =row.err_B
-                      %td
-                        =row.A
-                        &pm;
-                        =row.err_A
-
-        .row
           %h3 How are the \(w(\mathcal{E})\) calculated?
           %p
             The plots below show all the steps that lead to the final
@@ -330,10 +303,7 @@
                 %option{value: s.file}
                   =s.particle_size
                   &micro;m particle size,
-                  =s.sample_thickness
-                  mm sample thickness
-                  source filter:
-                  =s.filter
+                  =s.description
         .row
           .col-md-6
             %h3 absorption
@@ -376,10 +346,7 @@
                 %option{value: s.file}
                   =s.particle_size
                   &micro;m particle size,
-                  =s.sample_thickness
-                  source filter:
-                  =s.filter
-        .row
+                  =s.description
           .col-md-4
             %h3 absorption
             .portfolio-item#absorption-image

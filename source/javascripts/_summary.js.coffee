@@ -5,25 +5,18 @@ $ ->
         width = $(placeholder).width()
         factor = 0.618
         height = width * factor
-        prediction = [{
-            sample_thickness: 12
-            values: prediction.filter (d) -> d.sample_thickness == 12
-        },{
-            sample_thickness: 45
-            values: prediction.filter (d) -> d.sample_thickness == 45
-        }]
 
-        color_value = (d) ->
-            text = "sample thickness #{d.sample_thickness} mm"
-            text += ", source filter #{d.filter}" if d.filter and d.filter != "None"
-            return text
+        prediction = _.pairs(_.groupBy(prediction, "description"))
+        prediction = prediction.map (d) ->
+            description: d[0]
+            values: d[1]
 
         scatter = new d3.chart.Scatter()
             .width width
             .height height
             .x_value (d) -> d.particle_size
             .y_value (d) -> d.mean_R
-            .color_value color_value
+            .color_value (d) -> d.description
             .radius 6
             .margin {
                 bottom: 100
@@ -107,4 +100,3 @@ $ ->
             .attr "xlink:href", "#circles-#{placeholder.substring(1)}"
 
     draw_summary "#summary-plot"
-    draw_summary "#summary-plot-hard-spectrum"

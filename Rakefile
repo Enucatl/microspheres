@@ -65,6 +65,8 @@ namespace :summary do
     end
   end
 
+  file "data/build_summary.csv" => "source/data/datasets.csv"
+
   file "data/summary.json" => ["data/build_summary.R", "data/build_summary.csv"] do |f|
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
@@ -76,38 +78,25 @@ end
 
 namespace :fit do
 
-  file "data/fit12_full_spectrum.rds" => [
+  file "data/fit.rds" => [
     "data/fit.R",
-    "source/data/theory/12-full-spectrum.csv",
     "data/summary.json",
     "data/model.R"
   ] do |f|
-    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.prerequisites[2]} #{f.name} --filter 'sample_thickness == 12 & filter == \"None\"'"
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
-  file "data/fit45_full_spectrum.rds" => [
-    "data/fit.R",
-    "source/data/theory/45-full-spectrum.csv",
-    "data/summary.json",
-    "data/model.R"
+  file "data/fit_prediction.json" => [
+    "data/print_prediction.R",
+    "data/fit.rds",
+    "data/model.R",
   ] do |f|
-    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.prerequisites[2]} #{f.name} --filter 'sample_thickness == 45 & filter == \"None\"'"
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
-  file "data/fit12_Cu1mm.rds" => [
-    "data/fit.R",
-    "source/data/theory/12-copper.csv",
-    "data/summary.json",
-    "data/model.R"
-  ] do |f|
-    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.prerequisites[2]} #{f.name} --filter 'sample_thickness == 12 & filter == \"Cu 1 mm\"'"
-  end
-
-  file "data/fit_prediction.json" do |f|
-  end
-
-  task :fit => ["data/fit12_full_spectrum.rds", "data/fit45_full_spectrum.rds", "data/fit12_Cu1mm.rds"]
+  task :fit => "data/fit.rds"
   task :print => ["data/fit12_full_spectrum.rds", "data/fit45_full_spectrum.rds", "data/fit12_Cu1mm.rds"]
+  task :prediction => "data/fit_prediction.json"
 
 end
 
