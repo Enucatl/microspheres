@@ -152,22 +152,22 @@
               %table.table.text-center
                 %thead
                   %tr
-                    %th.text-center sample thickness (mm)
+                    %th.text-center sample
                     %th.text-center \(R_0\)
                     %th.text-center \(C (\times 10^{-3})\)
                 %tbody
-                  -data.fit_pars_full_spectrum.each do |row|
+                  -data.fit_pars.each do |row|
                     %tr
                       %td
-                        =row.sample_thickness
+                        =row.description
                       %td
-                        =row.B
+                        =row.R0
                         &pm;
-                        =row.err_B
+                        =row.err_R0
                       %td
-                        =row.A
+                        =row.C
                         &pm;
-                        =row.err_A
+                        =row.err_C
 
         .row
           %h3 The meaning of the fit constant \(R_0\)
