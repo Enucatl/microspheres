@@ -13,12 +13,12 @@ datasets = fread(args$source)
 setkey(datasets, csv)
 
 summary = datasets[, `:=`(
-      mean_A=fread(csv)[,mean(A)],
-      sd_A=fread(csv)[,sd(A)],
-      mean_B=fread(csv)[,mean(B)],
-      sd_B=fread(csv)[,sd(B)],
-      mean_R=fread(csv)[,mean(R)],
-      sd_R=fread(csv)[,sd(R)]), by=csv
+      mean_A=fread(csv)[, mean(A)],
+      sd_A=fread(csv)[, sd(A)],
+      mean_B=fread(csv)[, mean(B)],
+      sd_B=fread(csv)[, sd(B)],
+      mean_R=fread(csv)[, mean(R)],
+      sd_R=fread(csv)[, sd(R)]), by=csv
     ]
 
 summary = summary[, file := gsub("source/", "", csv)]
