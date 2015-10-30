@@ -141,3 +141,14 @@ namespace :theory do
   end
 
 end
+
+
+namespace :ggplot do
+
+  file "data/summary.png" => ["data/plot.R", "data/summary.json", "data/fit_prediction.json"] do |f|
+    sh "#{f.prerequisites.join(" ")} #{f.name}"
+  end
+
+  task :all => "data/summary.png"
+
+end

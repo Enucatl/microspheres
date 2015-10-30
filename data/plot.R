@@ -15,6 +15,8 @@ theme_set(theme_bw(base_size=12) + theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     legend.key = element_blank(),
+    legend.position = "top",
+    legend.direction = "vertical",
     panel.border = element_blank()
 ))
 
@@ -27,22 +29,22 @@ args <- parser$parse_args()
 prediction = data.table(fromJSON(args$prediction))
 summary = data.table(fromJSON(args$summary))
 
-plot = ggplot(summary, aes(colour=factor(sample_thickness))) + 
-    geom_point(aes(x=particle_size, y=mean_R, group=sample_thickness), size=2) +
+plot = ggplot(summary, aes(colour=description)) + 
+    geom_point(aes(x=particle_size, y=mean_R, group=description), size=2) +
     geom_errorbar(aes(x=particle_size, ymax=mean_R + sd_R, ymin=mean_R -
                       sd_R)) +
     geom_line(data=prediction, aes(x=particle_size, y=mean_R,
-                                   group=sample_thickness), size=1) +
+                                   group=description), size=1) +
     labs(
          x="particle size (μm)",
          y="R",
-         colour="thickness (mm)")
+         colour="")
 
-#X11(width=14, height=10)
-#print(plot)
-#warnings()
 width = 7
-factor = 0.618
+factor = 1
 height = width * factor
+X11(width=width, height=height)
+print(plot)
+warnings()
 ggsave(args$output, plot, width=width, height=height, dpi=300)
-#invisible(readLines(con="stdin", 1))
+invisible(readLines(con="stdin", 1))
