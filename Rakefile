@@ -18,8 +18,7 @@ namespace :reconstruction do
 
   def link_from_reconstructed filename
     basename = File.basename filename
-    File.join "source", "data", "rawdata", basename
-  end
+    File.join "source", "data", "rawdata", basename end
 
   def csv_from_reconstructed filename
     link_from_reconstructed(filename).ext("csv")
@@ -113,12 +112,6 @@ end
 
 namespace :theory do
 
-  task :all => [
-    "source/data/theory/12-full-spectrum.csv",
-    "source/data/theory/45-full-spectrum.csv",
-    "source/data/theory/12-copper.csv",
-  ]
-
   file "source/data/theory/12-full-spectrum.csv" => [
     "source/data/theory/theoretical_curves.py",
     "source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv",
@@ -140,4 +133,23 @@ namespace :theory do
     sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} --thickness 1.2 --additional_filter_material Cu --additional_filter_density 8.92 --additional_filter_thickness 0.1 --output #{f.name}"
   end
 
+  task :all => [
+    "source/data/theory/12-full-spectrum.csv",
+    "source/data/theory/45-full-spectrum.csv",
+    "source/data/theory/12-copper.csv",
+  ]
+
 end
+
+
+namespace :ggplot do
+
+  file "data/summary.png" => ["data/plot.R", "data/summary.json", "data/fit_prediction.json"] do |f|
+    sh "#{f.prerequisites.join(" ")} #{f.name}"
+  end
+
+  task :all => "data/summary.png"
+
+end
+
+task :default => ["theory:all", "fit:all", "ggplot:all"]
