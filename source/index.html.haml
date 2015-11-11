@@ -97,7 +97,7 @@
           %p
             In the case of a polychromatic beam, this formula needs to be computed for each energy bin \(\mathcal{E}\) of the spectrum and then summed over the spectrum:
             \\[
-            R = \sum_\mathcal{E} w(\mathcal{E}) R(\mathcal{E})
+            R = \frac{\sum_\mathcal{E} w(\mathcal{E}) \log B(\mathcal{E})}{\sum_\mathcal{E} w(\mathcal{E}) \log A(\mathcal{E})}
             \\]
           %p
             The spectral weights \(w(\mathcal{E})\) are computed starting from a
@@ -135,7 +135,10 @@
           %p
             After the spectral weights are computed, and they are obviously different for different thicknesses, the function \(R\) can be fitted to the data with two free parameters \(C\) and \(R_0\) such that:
             \\[
-            R(\mathcal{E}) = R_0 + C \dfrac{|n|^2}{\beta} u(\mathcal{E})
+            \log B(\mathcal{E}) / t = C |\Delta n|^2 \mathcal{E} u(\mathcal{E})
+            \\]
+            \\[
+            R = R_0 + C \frac{\sum |\Delta n|^2 \mathcal{E} u(\mathcal{E})}{\sum \mathcal{E}\beta u(\mathcal{E})}
             \\]
             Where \(u(\mathcal{E})\) is the conditional statement of
             %a{href: "#formula-68"} (68).
@@ -154,7 +157,7 @@
                   %tr
                     %th.text-center sample
                     %th.text-center \(R_0\)
-                    %th.text-center \(C (\times 10^{-3})\)
+                    %th.text-center \(C (\times 10^{3})\)
                 %tbody
                   -data.fit_pars.each do |row|
                     %tr
