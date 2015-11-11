@@ -15,7 +15,7 @@ args <- parser$parse_args()
 
 perform_fit = function(spectrum_file, mean_R, particle_size) {
     spectrum = fread(spectrum_file[1])
-    norm = 1000 / spectrum[, sum(total_weight)]
+    norm = 1 / spectrum[, sum(total_weight)]
     spectrum = spectrum[, total_weight := norm * total_weight]
     fit = nls(
               mean_R ~ R0 + mu_total(spectrum, C, particle_size),
