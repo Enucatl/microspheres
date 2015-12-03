@@ -30,9 +30,9 @@ prediction = data.table(fromJSON(args$prediction))
 summary = data.table(fromJSON(args$summary))
 
 plot = ggplot(summary, aes(colour=description)) + 
-    geom_point(aes(x=particle_size, y=mean_R, group=description), size=2) +
-    geom_errorbar(aes(x=particle_size, ymax=mean_R + sd_R, ymin=mean_R -
-                      sd_R)) +
+    geom_line(aes(x=particle_size, y=mean_R, group=description), size=2) +
+    #geom_errorbar(aes(x=particle_size, ymax=mean_R + sd_R, ymin=mean_R -
+                      #sd_R)) +
     geom_line(data=prediction, aes(x=particle_size, y=mean_R,
                                    group=description), size=1) +
     labs(

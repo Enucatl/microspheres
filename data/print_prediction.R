@@ -11,7 +11,7 @@ parser$add_argument('output', nargs=1)
 args <- parser$parse_args()
 
 predict_dt = function(fit) {
-    prediction = data.table(particle_size=seq(0.1, 8, len=100))
+    prediction = data.table(particle_size=seq(0.1, 8, len=1000))
     prediction$mean_R = predict(fit[[1]], prediction)
     return(prediction)
 }
