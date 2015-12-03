@@ -1,11 +1,11 @@
-mu = function(A, n_squared, D, e, beta) {
+mu = function(A, n_squared, D, e) {
     # distance = 20cm = 20e4 um
     # hc = 1.24e-3 um keV
     # period = 2.8 um
     autocorrelation_factor = 1.24e-3 * 20e4 / 2.8
     d = autocorrelation_factor / e
     x = D / d
-    f = A * n_squared / beta
+    f = A * n_squared * e
     if (x <= 1) {
         return(f * x)
     }
@@ -19,7 +19,16 @@ mu = function(A, n_squared, D, e, beta) {
 
 mu_total = function(spectrum, A, D) {
     return(sapply(D, function(D_) {
-        total = spectrum[, mu_e := mu(A, n_squared, D_, energy, beta), by=energy]
-        return(total[, mu_e %*% total_weight])
+        logB = spectrum[,
+                mu_e := mu(A * 1000, n_squared, D_, energy),
+                by=energy][
+                , mu_e %*% total_weight
+                ]
+        logA = spectrum[,
+                mu_a := beta * energy,
+                by=energy][
+                , mu_a %*% total_weight
+                ]
+        return(logB / logA)
             }))
 }
