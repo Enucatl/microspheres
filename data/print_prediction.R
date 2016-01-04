@@ -20,6 +20,8 @@ fits = readRDS(args$fit)
 prediction = fits[
     , .(
     mean_R=predict_dt(fit)[, mean_R],
+    mean_R_structure_factor=predict_dt(fit_structure_factor)[, mean_R],
     particle_size=predict_dt(fit)[, particle_size]
     ), by=description]
+
 write(toJSON(prediction), args$output)

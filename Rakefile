@@ -75,41 +75,6 @@ namespace :summary do
 end
 
 
-namespace :fit do
-
-  file "data/fit.rds" => [
-    "data/fit.R",
-    "data/summary.json",
-    "data/model.R"
-  ] do |f|
-    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
-  end
-
-  file "data/fit_prediction.json" => [
-    "data/print_prediction.R",
-    "data/fit.rds",
-    "data/model.R",
-  ] do |f|
-    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
-  end
-
-  file "data/fit_pars.json" => [
-    "data/print_pars.R",
-    "data/fit.rds",
-    "data/model.R",
-  ] do |f|
-    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
-  end
-
-  file "data/fit.rds" => "theory:all"
-  task :fit => "data/fit.rds"
-  task :pars => "data/fit_pars.json"
-  task :prediction => "data/fit_prediction.json"
-  task :all => [:fit, :pars, :prediction]
-
-end
-
-
 namespace :theory do
 
   file "source/data/theory/12-full-spectrum.csv" => [
@@ -142,13 +107,53 @@ namespace :theory do
 end
 
 
+namespace :fit do
+
+  file "data/fit.rds" => [
+    "data/fit.R",
+    "data/summary.json",
+    "data/model.R"
+  ] do |f|
+    sh "#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+  end
+
+  file "data/fit_prediction.json" => [
+    "data/print_prediction.R",
+    "data/fit.rds",
+    "data/model.R",
+  ] do |f|
+    sh "#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+  end
+
+  file "data/fit_pars.json" => [
+    "data/print_pars.R",
+    "data/fit.rds",
+    "data/model.R",
+  ] do |f|
+    sh "#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+  end
+
+  file "data/fit.rds" => Rake::Task["theory:all"].prerequisites
+  task :fit => "data/fit.rds"
+  task :pars => "data/fit_pars.json"
+  task :prediction => "data/fit_prediction.json"
+  task :all => [:fit, :pars, :prediction]
+
+end
+
+
 namespace :ggplot do
 
   file "data/summary.png" => ["data/plot.R", "data/summary.json", "data/fit_prediction.json"] do |f|
     sh "#{f.prerequisites.join(" ")} #{f.name}"
   end
 
-  task :all => "data/summary.png"
+  file "data/structure.factor.influence.png" => ["data/plot_structure_factor_influence.R", "data/fit_prediction.json"] do |f|
+    sh "#{f.prerequisites.join(" ")} #{f.name}"
+  end
+
+
+  task :all => ["data/summary.png", "data/structure.factor.influence.png"]
 
 end
 
