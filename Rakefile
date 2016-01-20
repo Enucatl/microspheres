@@ -152,8 +152,11 @@ namespace :ggplot do
     sh "#{f.prerequisites.join(" ")} #{f.name}"
   end
 
+  file "data/variance.png" => ["data/plot_variance.R", "data/build_summary.csv"] do |f|
+    sh "#{f.prerequisites.join(" ")} #{f.name}"
+  end
 
-  task :all => ["data/summary.png", "data/structure.factor.influence.png"]
+  task :all => ["data/summary.png", "data/structure.factor.influence.png", "data/variance.png"]
 
 end
 
