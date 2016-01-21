@@ -1,1 +1,1 @@
-[{"description":"sample thickness 12 mm","R0":2.83,"err_R0":0.14,"C":3.1,"err_C":0.85},{"description":"sample thickness 45 mm","R0":2.34,"err_R0":0.16,"C":10,"err_C":1.8},{"description":"sample thickness 12 mm source filter 1 mm Cu","R0":2.23,"err_R0":0.093,"C":11,"err_C":1.1}]
+[{"description":"sample thickness 12 mm","R0":2.84,"err_R0":0.14,"C":3.2,"err_C":0.86},{"description":"sample thickness 45 mm","R0":2.35,"err_R0":0.16,"C":9.9,"err_C":1.8},{"description":"sample thickness 12 mm source filter 1 mm Cu","R0":2.23,"err_R0":0.093,"C":11,"err_C":1.1}]

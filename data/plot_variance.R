@@ -38,22 +38,26 @@ read_table = function(row) {
         ]
 }
 
-print(rbindlist(apply(datasets, 1, read_table)))
+min_visibility = 0.06
+dt = rbindlist(apply(datasets, 1, read_table))[v > min_visibility]
+dt[, sd_R_pixel := sd(R), by=c("pixel", "description", "particle_size")]
+dt[, sd_R := sd(R), by=c("description", "particle_size")]
 
-#plot = ggplot(summary, aes(colour=description)) + 
-    #geom_point(aes(x=particle_size, y=sd_R, group=description), size=2) +
-    #geom_errorbar(aes(x=particle_size, ymax=mean_R + sd_R, ymin=mean_R -
-                      #sd_R)) +
-    #labs(
-         #x="particle size (μm)",
-         #y="R",
-         #colour="")
+print(dt)
 
-#width = 7
-#factor = 1
-#height = width * factor
-#X11(width=width, height=height)
-#print(plot)
+
+plot = ggplot(dt, aes(colour=description)) + 
+    geom_histogram(aes(x=sd_R, group=description), alpha=0.5, size=2) +
+    labs(
+         x="pixel",
+         y="sd(R)",
+         colour="")
+
+width = 7
+factor = 1
+height = width * factor
+X11(width=width, height=height)
+print(plot)
 warnings()
-#ggsave(args$output, plot, width=width, height=height, dpi=300)
-#invisible(readLines(con="stdin", 1))
+ggsave(args$output, plot, width=width, height=height, dpi=300)
+invisible(readLines(con="stdin", 1))
