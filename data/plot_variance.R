@@ -28,16 +28,17 @@ args <- parser$parse_args()
 datasets = fread(args$source)
 setkey(datasets, csv)
 
-summary = datasets[, `:=`(
-      mean_A=fread(csv)[, mean(A), by=pixel],
-      sd_A=fread(csv)[, sd(A), by=pixel],
-      mean_B=fread(csv)[, mean(B), by=pixel],
-      sd_B=fread(csv)[, sd(B), by=pixel],
-      mean_R=fread(csv)[, mean(R), by=pixel],
-      sd_R=fread(csv)[, sd(R), by=pixel]), by=csv
-    ]
+print(data)
 
-print(summary)
+print(datasets[, .(csv, particle_size, description)])
+
+data = rbindlist(lapply(datasets[, .(csv, particle_size),
+        function(row) {
+            print(row)
+            return(fread(row[, csv])[, particle_size := row[, particle_size]])
+        }))
+
+print(data)
 
 #plot = ggplot(summary, aes(colour=description)) + 
     #geom_point(aes(x=particle_size, y=sd_R, group=description), size=2) +
