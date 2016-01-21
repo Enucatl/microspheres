@@ -28,17 +28,17 @@ args <- parser$parse_args()
 datasets = fread(args$source)
 setkey(datasets, csv)
 
-print(data)
+read_table = function(row) {
+    input = as.list(row)
+    dt = fread(input$csv)[,
+        `:=`(
+            description = input$description,
+            particle_size = input$particle_size
+            )
+        ]
+}
 
-print(datasets[, .(csv, particle_size, description)])
-
-data = rbindlist(lapply(datasets[, .(csv, particle_size),
-        function(row) {
-            print(row)
-            return(fread(row[, csv])[, particle_size := row[, particle_size]])
-        }))
-
-print(data)
+print(rbindlist(apply(datasets, 1, read_table)))
 
 #plot = ggplot(summary, aes(colour=description)) + 
     #geom_point(aes(x=particle_size, y=sd_R, group=description), size=2) +
@@ -54,6 +54,6 @@ print(data)
 #height = width * factor
 #X11(width=width, height=height)
 #print(plot)
-#warnings()
+warnings()
 #ggsave(args$output, plot, width=width, height=height, dpi=300)
 #invisible(readLines(con="stdin", 1))
