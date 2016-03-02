@@ -18,8 +18,8 @@ perform_fit_structure_factor = function(spectrum_file, mean_R, particle_size) {
     norm = 1 / spectrum[, sum(total_weight)]
     spectrum = spectrum[, total_weight := norm * total_weight]
     fit = nls(
-        mean_R ~ R0 + mu.total.structure.factor(spectrum, C, particle_size),
-        start=list(C=1e4, R0=2.3))
+        mean_R ~ R0 + C * mu.total.structure.factor(spectrum, particle_size),
+        start=list(C=1, R0=2.3))
     return(fit)
 }
 
@@ -28,16 +28,18 @@ perform_fit = function(spectrum_file, mean_R, particle_size) {
     norm = 1 / spectrum[, sum(total_weight)]
     spectrum = spectrum[, total_weight := norm * total_weight]
     fit = nls(
-        mean_R ~ R0 + mu.total(spectrum, C, particle_size),
-        start=list(C=1e4, R0=2.3))
+        mean_R ~ R0 + C * mu.total(spectrum, particle_size),
+        start=list(C=1, R0=2.3))
     return(fit)
 }
 
 summary = data.table(fromJSON(args$summary))
+
 fit = summary[,
     .(
         fit=list(perform_fit(spectrum, mean_R, particle_size)),
-        fit_structure_factor=list(perform_fit_structure_factor(spectrum, mean_R, particle_size))
+        fit_structure_factor=list(
+            perform_fit_structure_factor(spectrum, mean_R, particle_size))
         ),
     by=description
     ]
