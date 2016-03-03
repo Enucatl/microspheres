@@ -21,18 +21,21 @@ theme_set(theme_bw(base_size=12) + theme(
 ))
 
 parser <- ArgumentParser(description='plot fit prediction')
+parser$add_argument('summary', nargs=1)
 parser$add_argument('prediction', nargs=1)
 parser$add_argument('output', nargs=1)
+parser$add_argument('output2', nargs=1)
 args <- parser$parse_args()
 
 prediction = data.table(fromJSON(args$prediction))
+summary = data.table(fromJSON(args$summary))
 
 plot = ggplot(prediction, aes(colour=description)) + 
     geom_line(aes(x=particle_size, y=(mean_R - mean_R_structure_factor) / mean_R,
                                    group=description), size=1) +
     labs(
          x="particle size (μm)",
-         y="(R - R_struct) / R",
+         y="(R - Rₛₜᵣ) / R",
          colour="")
 
 width = 7
@@ -40,6 +43,20 @@ factor = 1
 height = width * factor
 X11(width=width, height=height)
 print(plot)
-warnings()
 ggsave(args$output, plot, width=width, height=height, dpi=300)
+plot2 = ggplot(summary, aes(colour=description)) + 
+    geom_line(data=prediction, aes(x=particle_size, y=mean_R_structure_factor,
+                                   group=description), size=1) +
+
+    geom_point(aes(x=particle_size, y=mean_R, group=description), size=2) +
+    geom_errorbar(aes(x=particle_size, ymax=mean_R + sd_R, ymin=mean_R -
+                      sd_R)) +
+    labs(
+         x="particle size (μm)",
+         y="Rₛₜᵣ",
+         colour="")
+X11(width=width, height=height)
+print(plot2)
+ggsave(args$output2, plot2, width=width, height=height, dpi=300)
+warnings()
 invisible(readLines(con="stdin", 1))

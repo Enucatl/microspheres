@@ -77,6 +77,12 @@ end
 
 namespace :theory do
 
+  file "data/dfec_structure_factor.csv" => [
+    "data/build_dfec_structure_factor.py",
+  ] do |f|
+    sh "python #{f.prerequisites[0]} --output #{f.name}"
+  end
+
   file "source/data/theory/12-full-spectrum.csv" => [
     "source/data/theory/theoretical_curves.py",
     "source/data/spectra/U210-160kVp11deg1000Air0.8Be0Al0Cu0Sn0W0Ta0Wa.csv",
@@ -148,15 +154,22 @@ namespace :ggplot do
     sh "#{f.prerequisites.join(" ")} #{f.name}"
   end
 
-  file "data/structure.factor.influence.png" => ["data/plot_structure_factor_influence.R", "data/fit_prediction.json"] do |f|
-    sh "#{f.prerequisites.join(" ")} #{f.name}"
+  file "data/structure.factor.influence.png" => ["data/plot_structure_factor_influence.R", "data/summary.json", "data/fit_prediction.json"] do |f|
+    sh "#{f.prerequisites.join(" ")} data/summary.structure.factor.png #{f.name}"
   end
+
+  file "data/summary.structure.factor.png" => "data/structure.factor.influence.png"
 
   file "data/variance.png" => ["data/plot_variance.R", "data/build_summary.csv"] do |f|
     sh "#{f.prerequisites.join(" ")} #{f.name}"
   end
 
-  task :all => ["data/summary.png", "data/structure.factor.influence.png", "data/variance.png"]
+  task :all => [
+    "data/summary.png",
+    "data/structure.factor.influence.png",
+    "data/summary.structure.factor.png",
+    "data/variance.png"
+  ]
 
 end
 

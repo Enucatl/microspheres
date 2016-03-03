@@ -34,15 +34,13 @@ mu.total = function(spectrum, D) {
 }
 
 structure.factors.file = "data/dfec_structure_factor.csv"
-structure.factors = fread(structure.factors.file, header=TRUE)
-structure.factors = melt(structure.factors, id.vars="energy", variable.name="particle_size", value.name="dfec")
-structure.factors[, particle_size := as.numeric(as.character(particle_size))]
+structure.factors = fread(structure.factors.file)
 
 mu.total.structure.factor = function(spectrum, D) {
     return(sapply(D, function(D_) {
         logB = (
             spectrum[, total_weight] %*%
-            structure.factors[particle_size == D_, dfec]
+            structure.factors[diameter == D_, dfec]
         )
         logA = spectrum[,
             mu_a := beta * energy * 1e3,
