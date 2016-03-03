@@ -18,7 +18,7 @@ log = logging.getLogger()
               help="pitch of G2 [m]")
 @click.option("--intergrating_distance", type=float, default=12e-2,
               help="pitch of G2 [m]")
-@click.option("--volume_fraction", type=float, default=0.4,
+@click.option("--volume_fraction", type=float, default=0.5,
               help="fraction of the total volume occupied by the spheres")
 @click.option("--sphere_material", default="SiO2",
               help="chemical composition of the spheres")
@@ -62,7 +62,9 @@ def main(
     diameters = np.concatenate((diameters, np.linspace(0.1, 8, 100)))
     energies = np.arange(20, 161)
     output_csv = csv.writer(output)
-    output_csv.writerow(["energy", "diameter", "dfec"])
+    output_csv.writerow(
+        ["energy", "diameter", "dfec_lynch", "dfec_structure"]
+    )
     for energy in energies:
         delta_sphere, beta_sphere, _ = xdb.xray_delta_beta(
             sphere_material,
@@ -83,7 +85,7 @@ def main(
             endpoint=False,
         )
         for diameter in diameters:
-            dfec = saxs.dark_field_extinction_coefficient(
+            dfec_lynch = saxs.dark_field_extinction_coefficient(
                 wavelength,
                 grating_pitch,
                 intergrating_distance,
@@ -92,7 +94,19 @@ def main(
                 delta_chi_squared,
                 real_space_sampling
             )
-            output_csv.writerow([energy, diameter, dfec])
+            dfec_structure = saxs.dark_field_extinction_coefficient(
+                wavelength,
+                grating_pitch,
+                intergrating_distance,
+                diameter * 1e-6,
+                volume_fraction,
+                delta_chi_squared,
+                real_space_sampling,
+                saxs.hard_sphere_structure_factor
+            )
+            output_csv.writerow(
+                [energy, diameter, dfec_lynch, dfec_structure]
+            )
 
 
 if __name__ == "__main__":

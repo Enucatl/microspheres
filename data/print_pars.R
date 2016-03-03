@@ -24,6 +24,7 @@ print_pars = function(fit) {
 }
 
 fits = readRDS(args$fit)
+print(fits)
 pars = fits[
     , .(
         R0=print_pars(fit)[, R0],

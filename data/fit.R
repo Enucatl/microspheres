@@ -44,4 +44,7 @@ fit = summary[,
     by=description
     ]
 
+print(fit[, fit])
+print(fit[, fit_structure_factor])
+
 saveRDS(fit, args$output)
