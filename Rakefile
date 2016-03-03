@@ -155,7 +155,7 @@ namespace :ggplot do
   end
 
   file "data/structure.factor.influence.png" => ["data/plot_structure_factor_influence.R", "data/summary.json", "data/fit_prediction.json"] do |f|
-    sh "#{f.prerequisites.join(" ")} data/summary.structure.factor.png #{f.name}"
+    sh "#{f.prerequisites.join(" ")} #{f.name} data/summary.structure.factor.png"
   end
 
   file "data/summary.structure.factor.png" => "data/structure.factor.influence.png"
