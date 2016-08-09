@@ -1,4 +1,5 @@
 require "csv"
+require "rake/clean"
 
 datasets = CSV.table "source/data/datasets.csv"
 summary = []
@@ -29,12 +30,13 @@ namespace :reconstruction do
     link = link_from_reconstructed reconstructed
     raw = raw_from_reconstructed reconstructed
     csv = csv_from_reconstructed reconstructed
+    CLEAN.include([link, reconstructed, csv])
     min_pixel = row[:min_pixel]
     max_pixel = row[:max_pixel]
 
     file reconstructed => raw do |f|
       Dir.chdir "../dpc_reconstruction" do
-        sh "flats_every.py --n_flats 1 --steps 19 --flats_every 1 #{f.prerequisites.join(" ")}"
+        sh "dpc_radiography --overwrite #{f.prerequisites.join(" ")}"
       end
     end
 
@@ -69,6 +71,8 @@ namespace :summary do
   file "data/summary.json" => ["data/build_summary.R", "data/build_summary.csv"] do |f|
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
+
+  CLEAN.include(["data/build_summary.csv", "data/summary.json"])
 
   task :all => "data/summary.json"
 
@@ -109,6 +113,11 @@ namespace :theory do
     "source/data/theory/45-full-spectrum.csv",
     "source/data/theory/12-copper.csv",
   ]
+  CLOBBER.include([
+    "source/data/theory/12-full-spectrum.csv",
+    "source/data/theory/45-full-spectrum.csv",
+    "source/data/theory/12-copper.csv",
+  ])
 
 end
 
@@ -120,15 +129,16 @@ namespace :fit do
     "data/summary.json",
     "data/model.R"
   ] do |f|
-    sh "#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
+  CLEAN.include("data/fit.rds")
 
   file "data/fit_prediction.json" => [
     "data/print_prediction.R",
     "data/fit.rds",
     "data/model.R",
   ] do |f|
-    sh "#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
   file "data/fit_pars.json" => [
@@ -136,7 +146,7 @@ namespace :fit do
     "data/fit.rds",
     "data/model.R",
   ] do |f|
-    sh "#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
   file "data/fit.rds" => Rake::Task["theory:all"].prerequisites
@@ -144,6 +154,11 @@ namespace :fit do
   task :pars => "data/fit_pars.json"
   task :prediction => "data/fit_prediction.json"
   task :all => [:fit, :pars, :prediction]
+  CLOBBER.include([
+    "data/fit.rds",
+    "data/fit_pars.json",
+    "data/fit_prediction.json"
+  ])
 
 end
 
@@ -170,6 +185,12 @@ namespace :ggplot do
     "data/summary.structure.factor.png",
     "data/variance.png"
   ]
+  CLOBBER.include([
+    "data/summary.png",
+    "data/structure.factor.influence.png",
+    "data/summary.structure.factor.png",
+    "data/variance.png"
+  ])
 
 end
 
