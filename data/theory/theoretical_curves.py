@@ -44,11 +44,13 @@ def calculate_spectrum(spectrum_file, design_energy, talbot_order,
         _, _, al_atlen = xdb.xray_delta_beta(
             'Al', 2.7, energy * 1e3)
         _, _, si_atlen = xdb.xray_delta_beta('Si', 2.33, energy * 1e3)
+        _, _, au_atlen = xdb.xray_delta_beta('Au', 11.34, energy * 1e3)
         detector_efficiency = 1 - np.exp(-2 / si_atlen)
         absorbed_in_sample = np.exp(-thickness / sio2_atlen)
         other_absorption = (
             np.exp(-0.2 / plastic_atlen) *
-            np.exp(-0.0016 / al_atlen)
+            np.exp(-0.0016 / al_atlen) *
+            np.exp(-0.00194 / au_atlen)
         )  # detector window, holders...
         if additional_filter_material:
             _, _, filter_atlen = xdb.xray_delta_beta(
