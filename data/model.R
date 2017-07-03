@@ -1,7 +1,10 @@
 structure.factors.file = "data/dfec_structure_factor.csv"
 structure.factors = fread(structure.factors.file)
+spectrum = fread("source/data/theory/12-full-spectrum.csv")
+norm = 1 / spectrum[, sum(total_weight)]
+spectrum = spectrum[, total_weight := norm * total_weight]
 
-mu.total = function(spectrum, D) {
+mu.total = function(D) {
     return(sapply(D, function(D_) {
         logB = (
             spectrum[, total_weight] %*%
@@ -13,10 +16,10 @@ mu.total = function(spectrum, D) {
                 , mu_a %*% total_weight
                 ]
         return(logB / logA)
-            }))
+}))
 }
 
-mu.total.structure.factor = function(spectrum, D) {
+mu.total.structure.factor = function(D) {
     return(sapply(D, function(D_) {
         logB = (
             spectrum[, total_weight] %*%
@@ -28,5 +31,5 @@ mu.total.structure.factor = function(spectrum, D) {
             , mu_a %*% total_weight
             ]
         return(logB / logA)
-            }))
+}))
 }

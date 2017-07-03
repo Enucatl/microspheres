@@ -1,8 +1,9 @@
 #!/usr/bin/env Rscript
 
+library(ggplot2)
 library(data.table)
 library(argparse)
-library(ggplot2)
+library(rjson)
 
 theme_set(theme_bw(base_size=12) + theme(
     legend.key.size=unit(1, 'lines'),
@@ -14,34 +15,29 @@ theme_set(theme_bw(base_size=12) + theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     legend.key = element_blank(),
-    legend.position = "top",
-    legend.direction = "vertical",
     panel.border = element_blank()
 ))
 
-parser <- ArgumentParser(description='plot fit prediction')
-parser$add_argument('summary', nargs=1)
-parser$add_argument('prediction', nargs=1)
-parser$add_argument('output', nargs=1)
-args <- parser$parse_args()
+commandline_parser = ArgumentParser(
+        description="merge the datasets into one data.table")
+commandline_parser$add_argument('source', nargs=1)
+commandline_parser$add_argument('output', nargs=1)
+args = commandline_parser$parse_args()
 
-prediction = readRDS(args$prediction)
-summary = readRDS(args$summary)
+summary = readRDS(args$source)
 
-plot = ggplot(summary) + 
+summaryplot = ggplot(summary) + 
     geom_point(aes(x=size, y=mean_R), size=2) +
-    geom_errorbar(aes(x=size, ymax=mean_R + sd_R, ymin=mean_R -
-                      sd_R)) +
-    geom_line(data=prediction, aes(x=size, y=mean_R), size=1) +
+    geom_errorbar(aes(x=size, ymax=mean_R + sd_R, ymin=mean_R - sd_R)) +
     labs(
          x="particle size (μm)",
          y="R")
 
+print(summaryplot)
+
 width = 7
-factor = 1
+factor = 0.618
 height = width * factor
-X11(width=width, height=height)
-print(plot)
-warnings()
-ggsave(args$output, plot, width=width, height=height, dpi=300)
+ggsave(args$output, summaryplot, width=width, height=height, dpi=300)
+
 invisible(readLines(con="stdin", 1))

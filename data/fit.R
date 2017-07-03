@@ -1,7 +1,6 @@
 #!/usr/bin/env Rscript
 
 library(data.table)
-library(jsonlite)
 library(ggplot2)
 library(argparse)
 library(reshape2)
@@ -13,38 +12,31 @@ parser$add_argument('output', nargs=1)
 args <- parser$parse_args()
 
 
-perform_fit_structure_factor = function(spectrum_file, mean_R, particle_size) {
-    spectrum = fread(spectrum_file[1])
-    norm = 1 / spectrum[, sum(total_weight)]
-    spectrum = spectrum[, total_weight := norm * total_weight]
+perform_fit_structure_factor = function(mean_R, size) {
     fit = nls(
-        mean_R ~ C * mu.total.structure.factor(spectrum, particle_size),
+        mean_R ~ C * mu.total.structure.factor(size),
         start=list(C=1))
     return(fit)
 }
 
-perform_fit = function(spectrum_file, mean_R, particle_size) {
-    spectrum = fread(spectrum_file[1])
-    norm = 1 / spectrum[, sum(total_weight)]
-    spectrum = spectrum[, total_weight := norm * total_weight]
+perform_fit = function(mean_R, size) {
     fit = nls(
-        mean_R ~ C * mu.total(spectrum, particle_size),
+        mean_R ~ C * mu.total(size),
         start=list(C=1))
     return(fit)
 }
 
-summary = data.table(fromJSON(args$summary))
+summary = readRDS(args$summary)
+print(summary)
 
 fit = summary[,
     .(
-        fit=list(perform_fit(spectrum, mean_R, particle_size)),
+        fit=list(perform_fit(mean_R, size)),
         fit_structure_factor=list(
-            perform_fit_structure_factor(spectrum, mean_R, particle_size))
-        ),
-    by=description
+            perform_fit_structure_factor(mean_R, size))
+        )
     ]
 
 print(fit[, fit])
 print(fit[, fit_structure_factor])
-
 saveRDS(fit, args$output)
