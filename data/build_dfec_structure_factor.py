@@ -63,7 +63,7 @@ def main(
     diameters = np.concatenate((
         diameters,
         np.linspace(0.1, 8, 100),
-        np.linspace(8.1, 100, 100),
+        np.linspace(8.1, 60, 30),
     ))
     energies = np.arange(20, 161)
     output_csv = csv.writer(output)
