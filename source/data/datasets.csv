@@ -1,34 +1,11 @@
-reconstructed,spectrum,min_pixel,max_pixel,particle_size,sample_thickness,description
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.06.29/S00000-00999/S00044_S00063.hdf5,source/data/theory/45-full-spectrum.csv,481,671,0.166,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.06.29/S00000-00999/S00064_S00083.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,0.166,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00002_S00021.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,0.261,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00022_S00041.hdf5,source/data/theory/45-full-spectrum.csv,480,670,0.261,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00043_S00062.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,0.507,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00063_S00082.hdf5,source/data/theory/45-full-spectrum.csv,480,600,0.507,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00084_S00103.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,0.69,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00104_S00123.hdf5,source/data/theory/45-full-spectrum.csv,480,600,0.69,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00127_S00146.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,0.89,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00211_S00230.hdf5,source/data/theory/45-full-spectrum.csv,400,620,0.890,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00169_S00188.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,1.18,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00189_S00208.hdf5,source/data/theory/45-full-spectrum.csv,420,640,1.18, 45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00233_S00252.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,1.54,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00253_S00272.hdf5,source/data/theory/45-full-spectrum.csv,550,650,1.54, 45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00275_S00294.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,1.70,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00295_S00314.hdf5,source/data/theory/45-full-spectrum.csv,470,635,1.70,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00317_S00336.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,1.86,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00337_S00356.hdf5,source/data/theory/45-full-spectrum.csv,360,630,1.86,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00359_S00378.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,3.62,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00379_S00398.hdf5,source/data/theory/45-full-spectrum.csv,500,600,3.62,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00401_S00420.hdf5,source/data/theory/12-full-spectrum.csv,100,1000,7.75,12,sample thickness 12 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.07.10/S00000-00999/S00421_S00440.hdf5,source/data/theory/45-full-spectrum.csv,500,600,7.75,45,sample thickness 45 mm
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00270_S00289.hdf5,source/data/theory/12-copper.csv,100,1000,3.62,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00293_S00312.hdf5,source/data/theory/12-copper.csv,100,1000,0.166,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00314_S00333.hdf5,source/data/theory/12-copper.csv,100,1000,0.261,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00335_S00354.hdf5,source/data/theory/12-copper.csv,100,1000,0.507,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00356_S00375.hdf5,source/data/theory/12-copper.csv,100,1000,0.690,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00377_S00396.hdf5,source/data/theory/12-copper.csv,100,1000,0.890,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00398_S00417.hdf5,source/data/theory/12-copper.csv,100,1000,1.18,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00419_S00438.hdf5,source/data/theory/12-copper.csv,100,1000,1.54,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00440_S00459.hdf5,source/data/theory/12-copper.csv,100,1000,1.70,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00461_S00480.hdf5,source/data/theory/12-copper.csv,100,1000,1.86,12,sample thickness 12 mm source filter 1 mm Cu
-/afs/psi.ch/project/hedpc/raw_data/2015/mythen/2015.10.19/S00000-00999/S00482_S00501.hdf5,source/data/theory/12-copper.csv,100,1000,7.75,12,sample thickness 12 mm source filter 1 mm Cu
+size,sample,flat
+0.261,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.145912204728.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.150209324777.h5
+0.507,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.151121659649.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.151418778397.h5
+0.690,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.153529536276.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.153826707827.h5
+0.890,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.152409546993.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.152706654380.h5
+1.180,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.154557009820.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.154854548358.h5
+1.540,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.162023103617.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.162320186366.h5
+1.700,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.160024254330.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.160321413398.h5
+1.860,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.161139281977.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.161436409625.h5
+3.620,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.162928775959.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.163225884363.h5
+7.750,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.163812298327.h5,/tenochtitlan/diluted_microspheres/2016_10_18/series.161018.164109447571.h5

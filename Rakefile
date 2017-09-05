@@ -2,80 +2,93 @@ require "csv"
 require "rake/clean"
 
 datasets = CSV.table "source/data/datasets.csv"
-summary = []
+
+def reconstructed_from_raw sample, flat
+  file1 = File.basename(sample, ".*")
+  file2 = File.basename(flat, ".*")
+  dir = File.dirname(sample)
+  File.join(dir, "#{file1}_#{file2}.h5")
+end
+
+datasets[:reconstructed] = datasets[:sample].zip(
+  datasets[:flat]).map {|s, f| reconstructed_from_raw(s, f)}
+
+def roi_from_reconstructed reconstructed
+    File.join(["source/data/roi", File.basename(reconstructed, ".h5") + ".roi"])
+end
+
+def csv_from_reconstructed reconstructed
+    File.join(["source/data/csv", File.basename(reconstructed, ".h5") + ".csv"])             
+end
+datasets[:csv] = datasets[:reconstructed].map {|f| csv_from_reconstructed(f)}
+datasets[:roi] = datasets[:reconstructed].map {|f| roi_from_reconstructed(f)}
 
 
 namespace :reconstruction do
 
-  def raw_from_reconstructed filename
-    dirname = File.dirname filename
-    basename = File.basename filename, ".*"
-    first, last = basename.split("_").map {|f| f.tr!("S", "").to_i}
-    numbers = (first..last).to_a
-    numbers.map do |n|
-      File.join dirname, "S#{n.to_s.rjust(5, "0")}.hdf5"
-    end
-  end
-
-  def link_from_reconstructed filename
-    basename = File.basename filename
-    File.join "source", "data", "rawdata", basename end
-
-  def csv_from_reconstructed filename
-    link_from_reconstructed(filename).ext("csv")
-  end
-
   datasets.each do |row|
     reconstructed = row[:reconstructed]
-    link = link_from_reconstructed reconstructed
-    raw = raw_from_reconstructed reconstructed
-    csv = csv_from_reconstructed reconstructed
-    CLEAN.include([link, reconstructed, csv])
-    min_pixel = row[:min_pixel]
-    max_pixel = row[:max_pixel]
+    CLEAN.include(reconstructed)
 
-    file reconstructed => raw do |f|
+    desc "dpc_reconstruction of #{reconstructed}"
+    file reconstructed => [row[:sample], row[:flat]] do |f|
       Dir.chdir "../dpc_reconstruction" do
-        sh "dpc_radiography --overwrite #{f.prerequisites.join(" ")}"
+        sh "dpc_radiography --drop_last --group /entry/data #{f.prerequisites.join(' ')}"
       end
     end
+  end
 
-    file link => reconstructed do |f|
-      ln_sf reconstructed, f.name
-    end
-
-    file csv => [link, "source/data/rawdata/hdf2csv.py"] do |f|
-      sh "python #{f.prerequisites[1]} #{f.prerequisites[0]} --crop #{min_pixel} #{max_pixel}"
+  desc "csv with reconstructed datasets"
+  file "source/data/reconstructed.csv" => datasets[:reconstructed] do |f|
+    File.open(f.name, "w") do |file|
+      file.write(datasets.to_csv)
     end
   end
+  CLOBBER.include("source/data/reconstructed.csv")
 
 end
 
 
-namespace :summary do
+namespace :rectangle_selection do
 
-  file "data/build_summary.csv" => datasets[:reconstructed].map {|reconstructed| csv_from_reconstructed(reconstructed)} do |f|
-    datasets.each do |row|
-      row[:csv] = csv_from_reconstructed(row[:reconstructed])
-      summary << row
+  datasets.each do |row|
+
+    desc "select the roi for #{row[:reconstructed]}"
+    file row[:roi] => ["source/data/rectangle_selection.py", row[:reconstructed]] do |f|
+      sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
     end
-    CSV.open(f.name, "w", write_headers: true, headers: datasets.headers) do |csv|
-      summary.each do |row|
-        csv.puts row
-      end
+
+    desc "export selection to #{row[:csv]}"
+    file row[:csv] => ["source/data/rectangle_data.py", row[:reconstructed], row[:roi]] do |f|
+      sh "python #{f.prerequisites[0]} #{f.prerequisites[1]} #{f.prerequisites[2]} #{f.name}"
     end
+
+    CLOBBER.include(row[:roi])
+    CLEAN.include(row[:csv])
+
   end
 
-  file "data/build_summary.csv" => "source/data/datasets.csv"
+end
 
-  desc "create summary with measurements"
-  file "data/summary.json" => ["data/build_summary.R", "data/build_summary.csv"] do |f|
+namespace :summary do
+
+  desc "merge the csv datasets into one table"
+  file "data/pixels.rds" => ["data/merge_datasets.R", "source/data/reconstructed.csv"] + datasets[:csv] do |f|
+    sh "./#{f.prerequisites[0]} -f #{f.prerequisites[1]} -o #{f.name}"
+  end
+
+  desc "build summary"
+  file "data/summary.rds" => ["data/build_summary.R", "data/pixels.rds"] do |f|
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
-  CLEAN.include(["data/build_summary.csv", "data/summary.json"])
+  desc "single dataset plots"
+  file "data/ratio.png" => ["data/single_dataset_histogram.R", "data/summary.rds"] do |f|
+    sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
+  end
+  CLOBBER.include("data/ratio.png")
 
-  task :all => "data/summary.json"
+  task :all => "data/ratio.png"
 
 end
 
@@ -128,23 +141,20 @@ namespace :fit do
 
   file "data/fit.rds" => [
     "data/fit.R",
-    "data/summary.json",
+    "data/summary.rds",
     "data/model.R"
   ] do |f|
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
   CLEAN.include("data/fit.rds")
 
-  file "data/fit_prediction.json" => [
-    "data/print_prediction.R",
-    "data/fit.rds",
-    "data/model.R",
-  ] do |f|
+  desc "print pars"
+  file "data/fit_pars.json" => ["data/print_pars.R", "data/fit.rds"] do |f|
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
 
-  file "data/fit_pars.json" => [
-    "data/print_pars.R",
+  file "data/fit_prediction.rds" => [
+    "data/print_prediction.R",
     "data/fit.rds",
     "data/model.R",
   ] do |f|
@@ -167,7 +177,8 @@ end
 
 namespace :ggplot do
 
-  file "data/summary.png" => ["data/plot.R", "data/summary.json", "data/fit_prediction.json"] do |f|
+  desc "summary with fit"
+  file "data/summary.png" => ["data/plot.R", "data/summary.rds", "data/fit_prediction.rds"] do |f|
     sh "#{f.prerequisites.join(" ")} #{f.name}"
   end
 

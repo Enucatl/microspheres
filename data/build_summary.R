@@ -9,27 +9,23 @@ parser$add_argument('source', nargs=1)
 parser$add_argument('output', nargs=1)
 args <- parser$parse_args()
 
-datasets = fread(args$source)
-setkey(datasets, csv)
+min_visibility = 0.05
+table = readRDS(args$source)[v > min_visibility]
 
-min_visibility = 0.06
-
-statistics = function(csv) {
-    dt = fread(csv)[v > min_visibility]
+statistics = function(A, B, R, size) {
     return(list(
-      mean_A=dt[, mean(A)],
-      sd_A=dt[, sd(A)],
-      mean_B=dt[, mean(B)],
-      sd_B=dt[, sd(B)],
-      mean_R=dt[, mean(R)],
-      sd_R=dt[, sd(R)]
+      mean_A=mean(A),
+      sd_A=sd(A),
+      mean_B=mean(B),
+      sd_B=sd(B),
+      mean_R=mean(R),
+      sd_R=sd(R)
         )
         )
 }
 
-summary = datasets[, c(
-    "mean_A", "sd_A", "mean_B", "sd_B", "mean_R", "sd_R"
-    ) := statistics(csv), by=csv]
+setkey(table, size)
+summary = table[, statistics(A, B, R), by=size]
+print(summary)
 
-summary = summary[, file := gsub("source/", "", csv)]
-write(toJSON(summary), args$output)
+saveRDS(summary, args$output)
