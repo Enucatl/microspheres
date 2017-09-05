@@ -2,6 +2,7 @@ import click
 import csv
 import numpy as np
 from scipy import constants
+from tqdm import tqdm
 
 import logging
 import logging.config
@@ -59,13 +60,17 @@ def main(
         3.62,
         7.75,
     ])
-    diameters = np.concatenate((diameters, np.linspace(0.1, 8, 100)))
+    diameters = np.concatenate((
+        diameters,
+        np.linspace(0.1, 8, 100),
+        np.linspace(8.1, 100, 100),
+    ))
     energies = np.arange(20, 161)
     output_csv = csv.writer(output)
     output_csv.writerow(
         ["energy", "diameter", "dfec_lynch", "dfec_structure"]
     )
-    for energy in energies:
+    for energy in tqdm(energies):
         delta_sphere, beta_sphere, _ = xdb.xray_delta_beta(
             sphere_material,
             sphere_density,

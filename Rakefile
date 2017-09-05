@@ -68,6 +68,7 @@ namespace :summary do
 
   file "data/build_summary.csv" => "source/data/datasets.csv"
 
+  desc "create summary with measurements"
   file "data/summary.json" => ["data/build_summary.R", "data/build_summary.csv"] do |f|
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
@@ -81,6 +82,7 @@ end
 
 namespace :theory do
 
+  desc "calculate theoretical dfec"
   file "data/dfec_structure_factor.csv" => [
     "data/build_dfec_structure_factor.py",
   ] do |f|
