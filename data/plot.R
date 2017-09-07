@@ -23,6 +23,7 @@ parser <- ArgumentParser(description='plot fit prediction')
 parser$add_argument('summary', nargs=1)
 parser$add_argument('prediction', nargs=1)
 parser$add_argument('output', nargs=1)
+parser$add_argument('fulloutput', nargs=1)
 args <- parser$parse_args()
 
 prediction = readRDS(args$prediction)
@@ -35,6 +36,13 @@ plot = ggplot(summary) +
     geom_line(data=prediction, aes(x=size, y=mean_R), size=1) +
     labs(
          x="particle size (μm)",
+         y="R") +
+     xlim(0, 10)
+
+full_plot = ggplot(prediction) +
+    geom_line(aes(x=size, y=mean_R), size=1) +
+    labs(
+         x="particle size (μm)",
          y="R")
 
 width = 7
@@ -44,4 +52,5 @@ X11(width=width, height=height)
 print(plot)
 warnings()
 ggsave(args$output, plot, width=width, height=height, dpi=300)
+ggsave(args$fulloutput, full_plot, width=width, height=height, dpi=300)
 invisible(readLines(con="stdin", 1))

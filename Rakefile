@@ -142,7 +142,8 @@ namespace :fit do
   file "data/fit.rds" => [
     "data/fit.R",
     "data/summary.rds",
-    "data/model.R"
+    "data/model.R",
+    "data/dfec_structure_factor.csv"
   ] do |f|
     sh "./#{f.prerequisites[0]} #{f.prerequisites[1]} #{f.name}"
   end
@@ -179,7 +180,7 @@ namespace :ggplot do
 
   desc "summary with fit"
   file "data/summary.png" => ["data/plot.R", "data/summary.rds", "data/fit_prediction.rds"] do |f|
-    sh "#{f.prerequisites.join(" ")} #{f.name}"
+    sh "#{f.prerequisites.join(" ")} #{f.name} data/full_summary.png"
   end
 
   file "data/structure.factor.influence.png" => ["data/plot_structure_factor_influence.R", "data/summary.json", "data/fit_prediction.json"] do |f|
