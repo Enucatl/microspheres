@@ -15,21 +15,19 @@ log = logging.getLogger()
 
 
 @click.command()
-@click.option("--grating_pitch", type=float, default=2e-6,
+@click.option("--grating_pitch", type=float, default=5.4e-6,
               help="pitch of G2 [m]")
-@click.option("--intergrating_distance", type=float, default=12e-2,
+@click.option("--intergrating_distance", type=float, default=26e-2,
               help="pitch of G2 [m]")
 @click.option("--volume_fraction", type=float, default=0.5,
               help="fraction of the total volume occupied by the spheres")
 @click.option("--sphere_material", default="SiO2",
               help="chemical composition of the spheres")
-@click.option("--sphere_density", type=float, default=2.0,
+@click.option("--sphere_density", type=float, default=1.8,
               help="density of the material of the spheres [g/cm³]")
-@click.option("--volume_fraction", type=float, default=0.5,
-              help="fraction of the total volume occupied by the spheres")
 @click.option("--output", type=click.File("w"), default="-",
               help="output file for the csv data")
-@click.option("--sampling", type=int, default=1024,
+@click.option("--sampling", type=int, default=512,
               help="""
               number of cells for the sampling of real and fourier space""")
 @click.option("--verbose", is_flag=True, default=False)
@@ -62,7 +60,7 @@ def main(
     ])
     diameters = np.concatenate((
         diameters,
-        np.linspace(0.1, 8, 100),
+        np.linspace(0.1, 8, 50),
         np.linspace(8.1, 60, 30),
     ))
     energies = np.arange(20, 161)
@@ -99,16 +97,7 @@ def main(
                 delta_chi_squared,
                 real_space_sampling
             )
-            dfec_structure = saxs.dark_field_extinction_coefficient(
-                wavelength,
-                grating_pitch,
-                intergrating_distance,
-                diameter * 1e-6,
-                volume_fraction,
-                delta_chi_squared,
-                real_space_sampling,
-                saxs.hard_sphere_structure_factor
-            )
+            dfec_structure = 1
             output_csv.writerow(
                 [energy, diameter, dfec_lynch, dfec_structure]
             )
